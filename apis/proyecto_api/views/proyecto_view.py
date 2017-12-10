@@ -29,7 +29,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
             'jurado',
             'tesista',
             'linea_investigacion',
-            'proceso',
+            'tesis_proceso',
 
             'fecha_creacion', 
             'fecha_actualizacion')

@@ -18,9 +18,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^api/proceso/', include('apis.proceso_api.urls')),
-    url(r'^api/', include('apis.proceso_api.urls')),
-    # url(r'^api/', include('apis.tesis_proceso_api.urls')),
+    # url(r'^api/', include('apis.proceso_api.urls')),
+    url(r'^api/proceso/', include('apis.proceso_api.urls')),
+    url(r'^api/tesis_proceso/', include('apis.tesis_proceso_api.urls')),
+    url(r'^api/proyecto/', include('apis.proyecto_api.urls')),
     # url(r'^api/', include('apis.tesis_proceso_api.urls')),
 
 ]
