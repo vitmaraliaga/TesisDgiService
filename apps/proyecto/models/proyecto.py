@@ -22,7 +22,8 @@ class Proyecto(Base):
     titulo = models.CharField(capfirst(_('título')), max_length=500)
     resumen = models.TextField(capfirst(_('resumen')), null=True, blank=True)
     archivo = models.FileField(capfirst(_('archivo')), upload_to='proyecto/archivos/',
-                               default='proyecto/archivos/none/default.pdf')
+                               default='proyecto/archivos/none/default.pdf', 
+                               null=True, blank=True)
     fecha_fin = models.DateTimeField(capfirst(_('fecha de finalización')), null=True, blank=True)
     estado = models.CharField(capfirst(_('estado')), choices=ESTADO_PROYECTO_CHOICES, max_length=15, default=PROCESO)
     fecha_sustentacion = models.DateTimeField(capfirst(_('fecha de sustentación')), null=True, blank=True)

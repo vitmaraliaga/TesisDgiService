@@ -10,12 +10,15 @@ from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
 from .base import Base
+from .escuela import Escuela
 
 
 class LineaInvestigacion(Base):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
     activo = models.BooleanField(default=True)
+    escuela = models.ForeignKey(Escuela, verbose_name=capfirst(_('escuela')), related_name='%(class)s',
+                                null=True, blank=True)
 
     class Meta:
         verbose_name = 'LineaInvestigacion'
