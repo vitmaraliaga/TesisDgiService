@@ -10,6 +10,9 @@ import logging
 from apps.proyecto.models.proyecto import Proyecto
 from rest_framework import viewsets, serializers
 
+from backend_utils.pagination import ModelPagination
+
+
 log = logging.getLogger(__name__)
 
 
@@ -36,7 +39,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
 
-class ProyectoViewSet(viewsets.ModelViewSet):
+class ProyectoViewSet(ModelPagination, viewsets.ModelViewSet):
     """
     A simple ViewSet for listing or retrieving proyecto.
     """
