@@ -61,7 +61,6 @@ class TesisProcesoList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         # print('print(request.data)')
         # print(request.data)
-        # print('print(request.data)')
 
         # if not request.data._mutable:
             # request.data._mutable = True
@@ -78,8 +77,15 @@ class TesisProcesoList(generics.ListCreateAPIView):
         data_proyecto = Proyecto()
         data_proyecto.titulo = request.data['proyecto_titulo']
         data_proyecto.estado = 'PROCESO'
+        print('----------???')
         data_proyecto.tesis_proceso = serializer.data['id']
+        print(serializer.data['id'])
+        print('----------??????')
         serializer1 = ProyectoSerializer(data = data_proyecto)
+        serializer1.is_valid(raise_exception=True)
+        print('YA CASI')
+        serializer1.save()
+        print('YA GUARDO')
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
