@@ -8,9 +8,9 @@ Description: View del recurso Proyecto.
 import logging
 
 from apps.proyecto.models.proyecto import Proyecto
-from rest_framework import viewsets, serializers
+from rest_framework import viewsets, serializers, filters
 
-from backend_utils.pagination import ModelPagination
+from backend_utils.pagination import ModelPagination 
 
 
 log = logging.getLogger(__name__)
@@ -45,3 +45,6 @@ class ProyectoViewSet(ModelPagination, viewsets.ModelViewSet):
     """
     queryset = Proyecto.objects.all()
     serializer_class = ProyectoSerializer
+    filter_backends = (filters.SearchFilter,)
+    # filter_fields = ['username', 'email', 'is_staff', 'groups']
+    search_fields = ['titulo']
