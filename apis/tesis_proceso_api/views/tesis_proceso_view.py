@@ -28,7 +28,6 @@ class TesisProcesoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TesisProceso
         fields = ('id', 'fecha_inicio', 'fecha_fin', 'estado',
-                #   'proceso_id',
                   'proceso',
                   'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
@@ -59,8 +58,6 @@ class TesisProcesoList(generics.ListCreateAPIView):
 
     # Este create es del mixins
     def create(self, request, *args, **kwargs):
-        # print('print(request.data)')
-        # print(request.data)
 
         # if not request.data._mutable:
             # request.data._mutable = True
@@ -68,24 +65,29 @@ class TesisProcesoList(generics.ListCreateAPIView):
         # insert Proceso
         request.data['fecha_inicio'] = datetime.datetime.now()
         request.data['estado'] = 'ACTIVO'
-
         serializer = TesisProcesoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
         # insert proyecto
-        data_proyecto = Proyecto()
-        data_proyecto.titulo = request.data['proyecto_titulo']
-        data_proyecto.estado = 'PROCESO'
-        print('----------???')
-        data_proyecto.tesis_proceso = serializer.data['id']
-        print(serializer.data['id'])
-        print('----------??????')
+        data_proyecto = {
+            'id': None,
+            'titulo': request.data['proyecto_titulo'],
+            'resumen': None,
+            'archivo': None,
+            'fecha_fin': None,
+            'estado': 'PROCESO',
+            'fecha_sustentacion': None,
+            'dictaminador': [],
+            'asesor': [],
+            'jurado': [],
+            'tesista': ['852b5d9e-6bbe-4661-8d68-1e978b7a9dcd'], # Tesista key
+            'linea_investigacion': ['d021f24b-c6f5-4e79-836f-954c1399fa14'],  # Linea_investigacion key
+            'tesis_proceso': serializer.data['id']
+            }
         serializer1 = ProyectoSerializer(data = data_proyecto)
         serializer1.is_valid(raise_exception=True)
-        print('YA CASI')
         serializer1.save()
-        print('YA GUARDO')
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -93,7 +95,6 @@ class TesisProcesoList(generics.ListCreateAPIView):
             # serializer.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class TesisProcesoDetail(generics.RetrieveUpdateDestroyAPIView):
     """

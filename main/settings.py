@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.tesis_proceso',
 
     # apis
+    'apis.academico_api',
     'apis.config_api',
     'apis.proceso_api',
     'apis.proyecto_api',
