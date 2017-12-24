@@ -95,7 +95,7 @@ class TesisProcesoList(generics.ListCreateAPIView):
             'asesor': [],
             'jurado': [],
             'tesista': ['852b5d9e-6bbe-4661-8d68-1e978b7a9dcd'], # Tesista key
-            'linea_investigacion': ['d021f24b-c6f5-4e79-836f-954c1399fa14'],  # Linea_investigacion key
+            'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
             'tesis_proceso': serializer.data['id']
             }
         serializer1 = ProyectoSerializer(data = data_proyecto)
