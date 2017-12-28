@@ -15,8 +15,8 @@ from .proceso import Proceso
 
 # Create your models here.
 class Etapa(Base):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(null=True, blank=True)
+    nombre = models.CharField(capfirst(_('nombre')), max_length=100)
+    descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
     proceso = models.ForeignKey(Proceso, related_name='%(class)s', verbose_name=capfirst(_('proceso')),
                                 on_delete=models.CASCADE)
     # siguiente = models.ForeignKey('self', related_name='anteriores', verbose_name=capfirst(_('siguiente')),
@@ -28,6 +28,7 @@ class Etapa(Base):
                                         verbose_name=capfirst(_('tarea activador')), null=True, blank=True)
     tarea_desactivador = models.ForeignKey('Tarea', related_name='%(class)s_desactivador',
                                            verbose_name=capfirst(_('tarea desactivador')), null=True, blank=True)
+    orden = models.IntegerField(capfirst(_('orden')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
 
     class Meta:
         verbose_name = 'etapa'

@@ -15,9 +15,9 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class Requisito(Base):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(null=True, blank=True)
-    activo = models.BooleanField(default=True)
+    nombre = models.CharField(capfirst(_('nombre')), max_length=100)
+    descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
+    activo = models.BooleanField(capfirst(_('activo')), default=True)
     plazo_dias = models.IntegerField(capfirst(_('plazo en dias')), null=True, blank=True, default=0)
     tipo = models.CharField(capfirst(_('tipo')), choices=TIPO_REQUISITO_CHOICES, max_length=15, default=NORMAL)
 

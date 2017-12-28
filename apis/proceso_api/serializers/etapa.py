@@ -12,5 +12,15 @@ from rest_framework import serializers
 class EtapaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Etapa
-        fields = ('id', 'nombre', 'plazo_dias', 'proceso', 'fecha_creacion', 'fecha_actualizacion')
+        fields = ('id', 
+                    'nombre', 
+                    'descripcion', 
+                    'proceso', 
+                    'anterior', 
+                    'plazo_dias', 
+                    'tarea_activador', 
+                    'tarea_desactivador', 
+                    'orden', 
+                    
+                    'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)

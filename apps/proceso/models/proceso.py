@@ -14,9 +14,9 @@ from .base import Base
 
 # Create your models here.
 class Proceso(Base):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(null=True, blank=True)
-    activo = models.BooleanField(default=True)
+    nombre = models.CharField(capfirst(_('nombre')), max_length=100)
+    descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
+    activo = models.BooleanField(capfirst(_('activo')), default=True)
 
     class Meta:
         verbose_name = 'proceso'
