@@ -30,9 +30,9 @@ class TareaList(generics.ListCreateAPIView):
     def get_queryset(self):
         etapa_id = self.kwargs['etapa_id']
         if etapa_id is not None:
-            return Tarea.objects.filter(etapa__id=etapa_id)
+            return Tarea.objects.filter(etapa__id=etapa_id).order_by('orden')
         else:
-            return Tarea.objects.all()
+            return Tarea.objects.all().order_by('orden')
 
     # def list(self, *args, **kwargs):
         # etapa_id = self.kwargs['etapa_id']

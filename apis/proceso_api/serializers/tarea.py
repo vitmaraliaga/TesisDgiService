@@ -21,6 +21,7 @@ class TareaSerializer(serializers.ModelSerializer):
                     'plazo_dias', 
                     'req_res_activador', 
                     'req_res_desactivador', 
+                    'orden', 
                     
                     'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)

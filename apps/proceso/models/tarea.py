@@ -31,6 +31,7 @@ class Tarea(Base):
     req_res_desactivador = models.ForeignKey(RequisitoResultado, related_name='+',
                                              verbose_name=capfirst(_('requisito resultado desactivador')), null=True,
                                              blank=True)
+    orden = models.IntegerField(capfirst(_('orden')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
 
     class Meta:
         verbose_name = "Tarea"
