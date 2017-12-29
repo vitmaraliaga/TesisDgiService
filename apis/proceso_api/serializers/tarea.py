@@ -12,5 +12,15 @@ from rest_framework import serializers
 class TareaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarea
-        fields = ('id', 'nombre', 'descripcion', 'plazo_dias', 'fecha_creacion', 'fecha_actualizacion')
+        fields = ('id', 
+                    'nombre', 
+                    'descripcion', 
+                    'etapa', 
+                    'anterior',
+                    'rol_ejecuta', 
+                    'plazo_dias', 
+                    'req_res_activador', 
+                    'req_res_desactivador', 
+                    
+                    'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)

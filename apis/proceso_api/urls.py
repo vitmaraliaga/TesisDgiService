@@ -14,6 +14,7 @@ from .viewsets.tarea import TareaViewSet
 from .viewsets.requisito_resultado import RequisitoResultadoViewSet
 # from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoViewSet
 from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoList
+from apis.proceso_api.viewsets.tarea import TareaList
 
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -40,7 +41,7 @@ router.register(r'requisito-resultados', RequisitoResultadoViewSet, base_name='r
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', TesisProcesoList.as_view())
+    url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', TesisProcesoList.as_view()),
+    url(r'etapas/(?P<etapa_id>.+)/tareas/$', TareaList.as_view())
     # url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', tesis_procesos_list, name='tesis-proceso-list')
-
 ]

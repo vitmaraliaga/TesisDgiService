@@ -26,4 +26,4 @@ class RolProceso(Base):
         verbose_name_plural = 'Roles de Proceso'
 
     def __str__(self):
-        return '%s (%s)' % (self.alias, self.estado)
+        return '%s (%s)' % (self.alias, self.activo)

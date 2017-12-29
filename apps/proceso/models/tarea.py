@@ -21,7 +21,7 @@ class Tarea(Base):
     descripcion = models.TextField(capfirst(_('descripcion')), null=True, blank=True)
     etapa = models.ForeignKey(Etapa, related_name='%(class)s', verbose_name=capfirst(_('etapa')),
                               on_delete=models.CASCADE)
-    siguiente = models.ForeignKey('self', related_name='anterior', verbose_name=capfirst(_('siguiente')),
+    anterior = models.ForeignKey('self', related_name='siguiente', verbose_name=capfirst(_('anterior')),
                                   null=True, blank=True)
     rol_ejecuta = models.ManyToManyField(RolProceso)
     plazo_dias = models.IntegerField(capfirst(_('plazo en dias')), null=True, blank=True, default=0)
