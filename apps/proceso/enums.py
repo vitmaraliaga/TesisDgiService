@@ -16,3 +16,47 @@ TIPO_REQUISITO_CHOICES = (
     (TEMPORIZADOR, capfirst(_('requisito temporizador'))),
 )
 
+
+# inputs
+INPUT = 'INPUT'
+TEXTAREA = 'TEXTAREA'
+PASSWORD = "PASSWORD"
+NUMBER = "NUMBER"
+EMAIL = "EMAIL"
+CHECKBOX = 'CHECKBOX'
+RADIOBUTTON = 'RADIOBUTTON'
+SELECT = 'SELECT'
+
+BUTTON = "BUTTON"
+SLIDER = "SLIDER"
+FILEINPUT = "FILEINPUT"
+SLIDETOGGLE = "SLIDETOGGLE"
+
+DATE = "DATE"
+DATETIMELOCAL = "DATETIMELOCAL"
+MONTH = "MONTH"
+TIME = "TIME"
+URL = "URL"
+
+
+TIPO_CAMPO_CHOICES = (
+    (INPUT, capfirst(_('input'))),
+    (TEXTAREA, capfirst(_('textarea'))),
+    (PASSWORD, capfirst(_('password'))),
+    (NUMBER, capfirst(_('number'))),
+    (EMAIL, capfirst(_('email'))),
+    (CHECKBOX, capfirst(_('checkbox'))),
+    (RADIOBUTTON, capfirst(_('radio-button'))),
+    (SELECT, capfirst(_('select'))),
+
+    (BUTTON, capfirst(_('button'))),
+
+    (SLIDER, capfirst(_('slider'))),
+    (FILEINPUT, capfirst(_('file-input'))),
+    (SLIDETOGGLE, capfirst(_('slide-toggle'))),
+    (DATE, capfirst(_('date'))),
+    (DATETIMELOCAL, capfirst(_('date-time-local'))),
+    (MONTH, capfirst(_('month'))),
+    (TIME, capfirst(_('time'))),
+    (URL, capfirst(_('url'))),
+)

@@ -7,6 +7,11 @@ from .models.resultado import Resultado
 from .models.rol_proceso import RolProceso
 from .models.tarea import Tarea
 
+from .models.forms.campo import Campo
+from .models.forms.formulario import Formulario
+# from .models.forms.campo_valor import CampoValor
+
+
 # Register your models here.
 admin.site.register(Proceso)
 admin.site.register(Etapa)
@@ -16,3 +21,7 @@ admin.site.register(Resultado)
 admin.site.register(RolProceso)
 admin.site.register(Tarea)
 
+#forms
+admin.site.register(Campo)
+admin.site.register(Formulario)
+# admin.site.register(CampoValor)

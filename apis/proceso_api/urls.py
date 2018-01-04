@@ -12,7 +12,16 @@ from .viewsets.rol_proceso import RolProcesoViewSet
 from .viewsets.resultado import ResultadoViewSet
 from .viewsets.tarea import TareaViewSet
 from .viewsets.requisito_resultado import RequisitoResultadoViewSet
-# from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoViewSet
+
+#Formulario
+from .viewsets.forms.formulario_view import FormularioViewSet
+from .viewsets.forms.formulario_view import FormularioList
+
+#Campo
+from .viewsets.forms.campo_view import CampoViewSet
+from .viewsets.forms.campo_view import CampoList
+
+
 from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoList
 from apis.proceso_api.viewsets.tarea import TareaList
 
@@ -28,6 +37,10 @@ router.register(r'resultados', ResultadoViewSet, base_name='resultado')
 router.register(r'tareas', TareaViewSet, base_name='tarea')
 router.register(r'requisito-resultados', RequisitoResultadoViewSet, base_name='requisito-resultado')
 
+#Forms
+router.register(r'formularios', FormularioViewSet, base_name='formulario')
+router.register(r'campos', CampoViewSet, base_name='campo')
+
 
 # tesis_procesos_list = TesisProcesoViewSet.as_view({
     # 'get': 'list_by_proceso',
@@ -42,6 +55,8 @@ router.register(r'requisito-resultados', RequisitoResultadoViewSet, base_name='r
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', TesisProcesoList.as_view()),
-    url(r'etapas/(?P<etapa_id>.+)/tareas/$', TareaList.as_view())
+    url(r'etapas/(?P<etapa_id>.+)/tareas/$', TareaList.as_view()),
+    url(r'tareas/(?P<tarea_id>.+)/formularios/$', FormularioList.as_view()),
+    url(r'formularios/(?P<formulario_id>.+)/campos/$', CampoList.as_view())
     # url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', tesis_procesos_list, name='tesis-proceso-list')
 ]
