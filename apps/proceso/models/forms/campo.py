@@ -18,16 +18,16 @@ class Campo(Base):
     Model campo.
     """
     label = models.CharField(capfirst(_('label')), max_length=100)
-    name = models.CharField(capfirst(_('name')), max_length=100, help_text="Este campo es único") # this is unique.
-    tipo = models.CharField(capfirst(_('tipo')), choices=TIPO_CAMPO_CHOICES, max_length=15, default=INPUT)
-    requerido = models.BooleanField(capfirst(_('requerido')), default=False)
+    key = models.CharField(capfirst(_('key')), max_length=100, help_text="Este campo es único") # this is unique.
+    type = models.CharField(capfirst(_('type')), choices=TIPO_CAMPO_CHOICES, max_length=15, default=INPUT)
+    required = models.BooleanField(capfirst(_('required')), default=False)
     flex = models.IntegerField(capfirst(_('flex')), null=True, blank=True, default=100, help_text="width in %")# width in %
 
 
-    minimo = models.IntegerField(capfirst(_('minimo')), null=True, blank=True)
-    maximo = models.IntegerField(capfirst(_('maximo')), null=True, blank=True)
+    min = models.IntegerField(capfirst(_('min')), null=True, blank=True)
+    max = models.IntegerField(capfirst(_('max')), null=True, blank=True)
     backgroud = models.CharField(capfirst(_('backgroud')), max_length=300, null=True, blank=True)
-    modelo = models.CharField(capfirst(_('modelo')), max_length=200, null=True, blank=True, help_text="Solo para selects") #Solo para selects
+    model = models.CharField(capfirst(_('model')), max_length=200, null=True, blank=True, help_text="Solo para selects") #Solo para selects
     json = models.TextField(capfirst(_('json')), null=True, blank=True, help_text="Solo para selects") #Solo para selects
     formulario = models.ForeignKey(Formulario, related_name='%(class)s', verbose_name=capfirst(_('formulario')),
                                 on_delete=models.CASCADE)
@@ -38,7 +38,7 @@ class Campo(Base):
     hint_end_count_text = models.BooleanField(capfirst(_('hint_end_count_text')), default=False, help_text="texto de ayúda Count del letras en el Input.")# true or false
     disabled =  models.BooleanField(capfirst(_('disabled')), default=False)
     multiselect =  models.NullBooleanField(capfirst(_('multiselect')), default=False, help_text="Solo para selects" ) # Only type select.
-    orden = models.IntegerField(capfirst(_('orden')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
+    order = models.IntegerField(capfirst(_('order')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
 
 
     class Meta:
@@ -46,4 +46,4 @@ class Campo(Base):
         verbose_name_plural = "campo"
 
     def __str__(self):
-        return '%s (required: %s)' % (self.label, self.requerido)
+        return '%s (required: %s)' % (self.label, self.required)

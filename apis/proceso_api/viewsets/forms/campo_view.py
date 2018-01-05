@@ -17,11 +17,11 @@ class CampoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campo
         fields = ('id', 
-                'label', 'name', 'tipo', 'requerido', 
-                'flex', 'minimo', 'maximo', 'backgroud', 
-                'modelo', 'json', 'formulario', 'icon', 
+                'label', 'key', 'type', 'required', 
+                'flex', 'min', 'max', 'backgroud', 
+                'model', 'json', 'formulario', 'icon', 
                 'prefix', 'hint_start', 'hint_end_count_text', 'disabled', 
-                'multiselect', 'orden', 
+                'multiselect', 'order', 
                 
                 
                 'fecha_creacion', 'fecha_actualizacion')
@@ -42,6 +42,6 @@ class CampoList(generics.ListCreateAPIView):
     def get_queryset(self):
         formulario_id = self.kwargs['formulario_id']
         if formulario_id is not None:
-            return Campo.objects.filter(formulario__id=formulario_id).order_by('orden')
+            return Campo.objects.filter(formulario__id=formulario_id).order_by('order')
         else:
-            return Campo.objects.all().order_by('orden')
+            return Campo.objects.all().order_by('order')
