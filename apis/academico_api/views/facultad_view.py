@@ -15,14 +15,13 @@ log = logging.getLogger(__name__)
 
 
 class FacultadSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Facultad
-        fields = ('id', 'nombre', 'alias', 'activo', 'logo', 
-            'tema',
-            'mision',
-            'vision',
-            'fecha_creacion', 'fecha_actualizacion')
+        fields = ('id', 'nombre', 'alias', 'activo', 'logo',
+                  'tema',
+                  'mision',
+                  'vision',
+                  'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
 

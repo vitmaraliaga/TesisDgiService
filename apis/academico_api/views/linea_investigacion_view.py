@@ -20,12 +20,12 @@ class LineaInvestigacionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LineaInvestigacion
-        fields = ('id', 'nombre', 
-                'descripcion', 'activo', 'escuela_nombre',
-                'escuela',  'fecha_creacion', 'fecha_actualizacion')
-        read_only_fields = ('id', 
-                'escuela_nombre',
-                'fecha_creacion', 'fecha_actualizacion',)
+        fields = ('id', 'nombre',
+                  'descripcion', 'activo', 'escuela_nombre',
+                  'escuela', 'fecha_creacion', 'fecha_actualizacion')
+        read_only_fields = ('id',
+                            'escuela_nombre',
+                            'fecha_creacion', 'fecha_actualizacion',)
 
     def is_escuela_nombre(self, lineaInvestigacion):
         return lineaInvestigacion.escuela.nombre

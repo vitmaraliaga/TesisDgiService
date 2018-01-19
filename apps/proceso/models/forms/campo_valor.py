@@ -16,23 +16,23 @@ from apps.tesis_proceso.models.tesis_proceso import TesisProceso
 from apps.tesis_proceso.models.tesis_etapa import TesisEtapa
 from apps.tesis_proceso.models.tesis_tarea import TesisTarea
 
-class CampoValor(Base):
 
+class CampoValor(Base):
     valorInput = models.CharField(capfirst(_('valorInput')), max_length=300, blank=True, null=True),
     valorTextArea = models.CharField(capfirst(_('textArea')), blank=True, null=True),
 
     valorFileInput = models.FileField(capfirst(_('valorFileInput')), upload_to='proceso/valor-file-inputs/',
-                            #    default='proceso/valor-file-inputs/none/default.pdf', 
-                               blank=True, null=True)
+                                      #    default='proceso/valor-file-inputs/none/default.pdf',
+                                      blank=True, null=True)
 
     campo = models.ForeignKey(Campo, related_name='%(class)s', verbose_name=capfirst(_('campo')),
-                                on_delete=models.CASCADE)
+                              on_delete=models.CASCADE)
     tesis_proceso = models.ForeignKey(TesisProceso, related_name='%(class)s', verbose_name=capfirst(_('TesisProceso')),
-                                on_delete=models.CASCADE),
+                                      on_delete=models.CASCADE),
     tesis_etapa = models.ForeignKey(TesisEtapa, related_name='%(class)s', verbose_name=capfirst(_('TesisEtapa')),
-                                on_delete=models.CASCADE),
+                                    on_delete=models.CASCADE),
     tesis_tarea = models.ForeignKey(TesisTarea, related_name='%(class)s', verbose_name=capfirst(_('TesisTarea')),
-                                on_delete=models.CASCADE),
+                                    on_delete=models.CASCADE),
 
     class Meta:
         verbose_name = 'campoValor'

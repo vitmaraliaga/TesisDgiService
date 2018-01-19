@@ -14,14 +14,13 @@ from ..tarea import Tarea
 
 
 class Formulario(Base):
-
     nombre = models.CharField(capfirst(_('nombre')), max_length=300)
     alias = models.CharField(capfirst(_('alias')), max_length=100, null=True, blank=True)
     descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
     tarea = models.ForeignKey(Tarea, related_name='%(class)s', verbose_name=capfirst(_('tarea')),
-                                on_delete=models.CASCADE)
-    orden = models.IntegerField(capfirst(_('orden')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
-
+                              on_delete=models.CASCADE)
+    orden = models.IntegerField(capfirst(_('orden')), null=True,
+                                blank=True)  # En realidad es not null. por problemas de migration se le pone asi.
 
     class Meta:
         verbose_name = 'formulario'
