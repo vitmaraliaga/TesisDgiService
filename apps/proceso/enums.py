@@ -18,25 +18,25 @@ TIPO_REQUISITO_CHOICES = (
 
 
 # inputs
-INPUT = 'INPUT'
-TEXTAREA = 'TEXTAREA'
-PASSWORD = "PASSWORD"
-NUMBER = "NUMBER"
-EMAIL = "EMAIL"
-CHECKBOX = 'CHECKBOX'
-RADIOBUTTON = 'RADIOBUTTON'
-SELECT = 'SELECT'
+INPUT = 'input'
+TEXTAREA = 'textarea'
+PASSWORD = "password"
+NUMBER = "number"
+EMAIL = "email"
+CHECKBOX = 'checkbox'
+RADIOBUTTON = 'radiobutton'
+SELECT = 'select'
 
-BUTTON = "BUTTON"
-SLIDER = "SLIDER"
-FILEINPUT = "FILEINPUT"
-SLIDETOGGLE = "SLIDETOGGLE"
+BUTTON = "button"
+SLIDER = "slider"
+FILEINPUT = "fileinput"
+SLIDETOGGLE = "slidetoggle"
 
-DATE = "DATE"
-DATETIMELOCAL = "DATETIMELOCAL"
-MONTH = "MONTH"
-TIME = "TIME"
-URL = "URL"
+DATE = "date"
+DATETIMELOCAL = "datetimelocal"
+MONTH = "month"
+TIME = "time"
+URL = "url"
 
 
 TIPO_CAMPO_CHOICES = (
