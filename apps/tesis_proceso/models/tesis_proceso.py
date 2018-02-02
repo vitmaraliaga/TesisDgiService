@@ -19,7 +19,7 @@ class TesisProceso(Base):
     fecha_fin = models.DateTimeField(capfirst(_('fecha de fin')), null=True, blank=True)
     estado = models.CharField(capfirst(_('estado')), choices=ESTADO_TESIS_PROCESO_CHOICES, default=ACTIVO,
                               max_length=15)
-    proceso = models.ForeignKey(Proceso, related_name='%(class)s', verbose_name=capfirst(_('proceso')))
+    proceso = models.ForeignKey(Proceso, related_name='%(class)ss', verbose_name=capfirst(_('proceso')))
 
     class Meta:
         verbose_name = 'TesisProceso'

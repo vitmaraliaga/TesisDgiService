@@ -27,5 +27,7 @@ urlpatterns = [
     url(r'^api/academico/', include('apis.academico_api.urls')),
     url(r'^api/config/', include('apis.config_api.urls')),
     # url(r'^api/', include('apis.tesis_proceso_api.urls')),
+    # path('admin/doc/', include('django.contrib.admindocs.urls'))
+    url(r'admin/doc/', include('django.contrib.admindocs.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

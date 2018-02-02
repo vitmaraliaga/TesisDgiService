@@ -19,11 +19,11 @@ class TesisRequisito(Base):
     estado = models.CharField(capfirst(_('estado')), choices=ESTADO_TESIS_REQUISITO_CHOICES, default=NO_CUMPLIDO,
                               max_length=15)
     informacion_adicional = models.TextField(null=True, blank=True)
-    requisito = models.ForeignKey(Requisito, related_name='%(class)s',
+    requisito = models.ForeignKey(Requisito, related_name='%(class)ss',
                                   verbose_name=capfirst(_('requisito')))
-    resultado = models.ForeignKey(Resultado, related_name='%(class)s',
+    resultado = models.ForeignKey(Resultado, related_name='%(class)ss',
                                   verbose_name=capfirst(_('resultado')))
-    tesis_tarea = models.ForeignKey(TesisTarea, related_name='%(class)s', verbose_name=capfirst(_('tesis_tarea')),
+    tesis_tarea = models.ForeignKey(TesisTarea, related_name='%(class)ss', verbose_name=capfirst(_('tesis_tarea')),
                                     blank=True, null=True)
 
     class Meta:

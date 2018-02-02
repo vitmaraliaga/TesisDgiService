@@ -19,7 +19,7 @@ from .rol_proceso import RolProceso
 class Tarea(Base):
     nombre = models.CharField(capfirst(_('nombre')), max_length=100)
     descripcion = models.TextField(capfirst(_('descripcion')), null=True, blank=True)
-    etapa = models.ForeignKey(Etapa, related_name='%(class)s', verbose_name=capfirst(_('etapa')),
+    etapa = models.ForeignKey(Etapa, related_name='%(class)ss', verbose_name=capfirst(_('etapa')),
                               on_delete=models.CASCADE)
     anterior = models.ForeignKey('self', related_name='siguiente', verbose_name=capfirst(_('anterior')),
                                   null=True, blank=True)

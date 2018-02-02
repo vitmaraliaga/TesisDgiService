@@ -17,16 +17,16 @@ from .proceso import Proceso
 class Etapa(Base):
     nombre = models.CharField(capfirst(_('nombre')), max_length=100)
     descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
-    proceso = models.ForeignKey(Proceso, related_name='%(class)s', verbose_name=capfirst(_('proceso')),
+    proceso = models.ForeignKey(Proceso, related_name='%(class)ss', verbose_name=capfirst(_('proceso')),
                                 on_delete=models.CASCADE)
     # siguiente = models.ForeignKey('self', related_name='anteriores', verbose_name=capfirst(_('siguiente')),
     #                              null=True, blank=True)
     anterior = models.ForeignKey('self', related_name='siguientes', verbose_name=capfirst(_('anterior')),
                                  null=True, blank=True)
     plazo_dias = models.IntegerField(capfirst(_('plazo en dias')), null=True, blank=True, default=0)
-    tarea_activador = models.ForeignKey('Tarea', related_name='%(class)s_activador',
+    tarea_activador = models.ForeignKey('Tarea', related_name='%(class)ss_activador',
                                         verbose_name=capfirst(_('tarea activador')), null=True, blank=True)
-    tarea_desactivador = models.ForeignKey('Tarea', related_name='%(class)s_desactivador',
+    tarea_desactivador = models.ForeignKey('Tarea', related_name='%(class)ss_desactivador',
                                            verbose_name=capfirst(_('tarea desactivador')), null=True, blank=True)
     orden = models.IntegerField(capfirst(_('orden')), null=True, blank=True) #En realidad es not null. por problemas de migration se le pone asi.
 

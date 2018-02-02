@@ -25,13 +25,13 @@ class CampoValor(Base):
                                       #    default='proceso/valor-file-inputs/none/default.pdf',
                                       blank=True, null=True)
 
-    campo = models.ForeignKey(Campo, related_name='%(class)s', verbose_name=capfirst(_('campo')),
+    campo = models.ForeignKey(Campo, related_name='%(class)ss', verbose_name=capfirst(_('campo')),
                               on_delete=models.CASCADE)
-    tesis_proceso = models.ForeignKey(TesisProceso, related_name='%(class)s', verbose_name=capfirst(_('TesisProceso')),
+    tesis_proceso = models.ForeignKey(TesisProceso, related_name='%(class)ss', verbose_name=capfirst(_('TesisProceso')),
                                       on_delete=models.CASCADE),
-    tesis_etapa = models.ForeignKey(TesisEtapa, related_name='%(class)s', verbose_name=capfirst(_('TesisEtapa')),
+    tesis_etapa = models.ForeignKey(TesisEtapa, related_name='%(class)ss', verbose_name=capfirst(_('TesisEtapa')),
                                     on_delete=models.CASCADE),
-    tesis_tarea = models.ForeignKey(TesisTarea, related_name='%(class)s', verbose_name=capfirst(_('TesisTarea')),
+    tesis_tarea = models.ForeignKey(TesisTarea, related_name='%(class)ss', verbose_name=capfirst(_('TesisTarea')),
                                     on_delete=models.CASCADE),
 
     class Meta:

@@ -26,7 +26,7 @@ class Escuela(Base):
                                             default='escuela/logos/none/default.png', null=True, blank=True)
     mision = models.TextField(capfirst(_('misión')), max_length=1000, null=True, blank=True)
     vision = models.TextField(capfirst(_('vision')), max_length=1000, null=True, blank=True)
-    facultad = models.ForeignKey(Facultad, verbose_name=capfirst(_('facultad')), related_name='%(class)s')
+    facultad = models.ForeignKey(Facultad, verbose_name=capfirst(_('facultad')), related_name='%(class)ss')
 
     class Meta:
         verbose_name = 'Escuela'

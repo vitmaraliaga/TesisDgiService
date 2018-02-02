@@ -14,11 +14,11 @@ from .base import Base
 
 
 class TesisTarea(Base):
-    tarea = models.ForeignKey(Tarea, related_name='%(class)s', verbose_name=capfirst(_('tarea')))
+    tarea = models.ForeignKey(Tarea, related_name='%(class)ss', verbose_name=capfirst(_('tarea')))
     activo = models.BooleanField(capfirst(_('activo')), default=True)
     fecha_inicio = models.DateTimeField(capfirst(_('fecha de inicio')))
     fecha_fin = models.DateTimeField(capfirst(_('fecha de finalizaciòn')))
-    tesis_etapa = models.ForeignKey(TesisEtapa, related_name='%(class)s', verbose_name=capfirst(_('tesis_etapa')),
+    tesis_etapa = models.ForeignKey(TesisEtapa, related_name='%(class)ss', verbose_name=capfirst(_('tesis_etapa')),
                                     blank=True, null=True)
 
     class Meta:

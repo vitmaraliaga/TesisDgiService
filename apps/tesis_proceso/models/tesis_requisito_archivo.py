@@ -17,7 +17,7 @@ class TesisRequisitoArchivo(Base):
                                default='tesis_requisito_archivo/archivos/none/default.pdf')
     imagen = models.ImageField(capfirst(_('foto')), upload_to='tesis_requisito_archivo/fotos/',
                                default='tesis_requisito_archivo/imagenes/none/default.png')
-    tesis_requisito = models.ForeignKey(TesisRequisito, related_name='%(class)s',
+    tesis_requisito = models.ForeignKey(TesisRequisito, related_name='%(class)ss',
                                         verbose_name=capfirst(_('tesis_requisito')),
                                         on_delete=models.CASCADE)
 

@@ -17,7 +17,7 @@ class LineaInvestigacion(Base):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
     activo = models.BooleanField(default=True)
-    escuela = models.ForeignKey(Escuela, verbose_name=capfirst(_('escuela')), related_name='%(class)s',
+    escuela = models.ForeignKey(Escuela, verbose_name=capfirst(_('escuela')), related_name='%(class)ss',
                                 null=True, blank=True)
 
     class Meta:

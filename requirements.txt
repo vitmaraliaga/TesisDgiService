@@ -2,6 +2,7 @@ Django==1.11.6
 django-backend-utils==0.1
 django-cors-headers==2.1.0
 djangorestframework==3.7.0
+docutils==0.14
 olefile==0.44
 Pillow==4.3.0
 pytz==2017.2

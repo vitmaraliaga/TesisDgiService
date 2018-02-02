@@ -31,7 +31,7 @@ class Campo(Base):
                              help_text="Solo para selects")  # Solo para selects
     json = models.TextField(capfirst(_('json')), null=True, blank=True,
                             help_text="Solo para selects")  # Solo para selects
-    formulario = models.ForeignKey(Formulario, related_name='%(class)s', verbose_name=capfirst(_('formulario')),
+    formulario = models.ForeignKey(Formulario, related_name='%(class)ss', verbose_name=capfirst(_('formulario')),
                                    on_delete=models.CASCADE)
     icon = models.CharField(capfirst(_('icon')), max_length=50, null=True, blank=True)
     prefix = models.CharField(capfirst(_('prefix')), max_length=50, null=True, blank=True,

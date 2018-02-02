@@ -18,7 +18,7 @@ class RolProceso(Base):
     alias = models.CharField(capfirst(_('alias')), max_length=20, null=True, blank=True)
     descripcion = models.TextField(capfirst(_('descripción')), null=True, blank=True)
     activo = models.BooleanField(capfirst(_('activo')), default=True)
-    proceso = models.ForeignKey(Proceso, related_name='%(class)s', verbose_name=capfirst(_('proceso')),
+    proceso = models.ForeignKey(Proceso, related_name='%(class)ss', verbose_name=capfirst(_('proceso')),
                                 on_delete=models.CASCADE)
 
     class Meta:
