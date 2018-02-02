@@ -9,6 +9,7 @@ Description: modelo Formulario
 from django.db import models
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator
 from ..base import Base
 from ..tarea import Tarea
 
@@ -21,6 +22,13 @@ class Formulario(Base):
                               on_delete=models.CASCADE)
     orden = models.IntegerField(capfirst(_('orden')), null=True,
                                 blank=True)  # En realidad es not null. por problemas de migration se le pone asi.
+    width = models.IntegerField(
+        capfirst(_('width')), 
+        default=100, 
+        validators=[
+            MaxValueValidator(100),
+            MinValueValidator(1),
+            ])
 
     class Meta:
         verbose_name = 'formulario'

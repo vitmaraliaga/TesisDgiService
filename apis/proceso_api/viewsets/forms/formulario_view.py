@@ -10,18 +10,18 @@ import logging
 from rest_framework import viewsets, mixins, serializers, generics
 
 from apps.proceso.models.forms.formulario import Formulario
-# from .campo_view import CampoSerializer
+from .campo_view import CampoSerializer
 
 log = logging.getLogger(__name__)
 
 class FormularioSerializer(serializers.ModelSerializer):
     # campo_listing = serializers.HyperlinkedIdentityField(view_name='proceso_api:campo-list')
-    # campo = CampoSerializer()
+    campo = CampoSerializer(many=True, read_only=False)
 
     class Meta:
         model = Formulario
-        fields = ('id', 'nombre', 
-                # 'campo_listing',
+        fields = ('id', 'nombre', 'width', 
+                'campo',
                 'alias', 'descripcion', 'tarea', 'orden', 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
