@@ -9,6 +9,8 @@ from .models.tarea import Tarea
 
 from .models.forms.campo import Campo
 from .models.forms.formulario import Formulario
+from .models.forms.validation import Validation
+from .models.forms.campo_validation import CampoValidation
 # from .models.forms.campo_valor import CampoValor
 
 
@@ -24,4 +26,6 @@ admin.site.register(Tarea)
 #forms
 admin.site.register(Campo)
 admin.site.register(Formulario)
+admin.site.register(Validation)
+admin.site.register(CampoValidation)
 # admin.site.register(CampoValor)

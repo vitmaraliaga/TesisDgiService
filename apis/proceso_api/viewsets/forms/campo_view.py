@@ -10,19 +10,24 @@ import logging
 from rest_framework import viewsets, mixins, serializers, generics
 
 from apps.proceso.models.forms.campo import Campo
-
+from .campo_validation_view import CampoValidationSerializer
+from .validation_view import ValidationSerializer
 log = logging.getLogger(__name__)
 
 class CampoSerializer(serializers.ModelSerializer):
+    campovalidation_set = CampoValidationSerializer(many=True, read_only=True)
+    # validation = ValidationSerializer(many=True, read_only=True)
     class Meta:
         model = Campo
         fields = ('id', 
-                'label', 'key', 'type', 'required', 
-                'flex', 'min', 'max', 'backgroud', 
+                'label', 'name', 'type', 'required', 
+                'width', 'placeholder', 
                 'model', 'json', 'formulario', 'icon', 
                 'prefix', 'hint_start', 'hint_end_count_text', 'disabled', 
                 'multiselect', 'order', 
                 
+                'campovalidation_set',
+                # 'validation',
                 
                 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)

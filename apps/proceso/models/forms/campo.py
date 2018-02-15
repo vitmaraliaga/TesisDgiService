@@ -10,6 +10,7 @@ from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 from ..base import Base
 from .formulario import Formulario
+from .validation import Validation
 from ...enums import TIPO_CAMPO_CHOICES, INPUT
 
 
@@ -18,15 +19,20 @@ class Campo(Base):
     Model campo.
     """
     label = models.CharField(capfirst(_('label')), max_length=100)
-    key = models.CharField(capfirst(_('key')), max_length=100, help_text="Este campo es único")  # this is unique.
+    # key = models.CharField(capfirst(_('key')), max_length=100, help_text="Este campo es único")  # this is unique.
+    name = models.CharField(capfirst(_('name')), max_length=100, help_text="Este campo es único 'is key' ")  # this is unique.
     type = models.CharField(capfirst(_('type')), choices=TIPO_CAMPO_CHOICES, max_length=15, default=INPUT)
     required = models.BooleanField(capfirst(_('required')), default=False)
-    flex = models.IntegerField(capfirst(_('flex')), null=True, blank=True, default=100,
+    # flex = models.IntegerField(capfirst(_('flex')), null=True, blank=True, default=100,
+                            #    help_text="width in %")  # width in %
+    width = models.IntegerField(capfirst(_('width')), null=True, blank=True, default=100,
                                help_text="width in %")  # width in %
-
-    min = models.IntegerField(capfirst(_('min')), null=True, blank=True)
-    max = models.IntegerField(capfirst(_('max')), null=True, blank=True)
-    backgroud = models.CharField(capfirst(_('backgroud')), max_length=300, null=True, blank=True)
+    validation = models.ManyToManyField(Validation, through='CampoValidation',
+                                        through_fields=('campo', 'validation'))
+    # min = models.IntegerField(capfirst(_('min')), null=True, blank=True)
+    # max = models.IntegerField(capfirst(_('max')), null=True, blank=True)
+    # backgroud = models.CharField(capfirst(_('backgroud')), max_length=300, null=True, blank=True)
+    placeholder = models.CharField(capfirst(_('placeholder')), max_length=300, null=True, blank=True)
     model = models.CharField(capfirst(_('model')), max_length=200, null=True, blank=True,
                              help_text="Solo para selects")  # Solo para selects
     json = models.TextField(capfirst(_('json')), null=True, blank=True,

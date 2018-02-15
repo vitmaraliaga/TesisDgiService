@@ -22,6 +22,10 @@ from .viewsets.forms.campo_view import CampoViewSet
 from .viewsets.forms.campo_view import CampoList
 
 
+from .viewsets.forms.campo_validation_view import CampoValidationViewSet
+from .viewsets.forms.validation_view import ValidationViewSet
+
+
 from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoList
 from apis.proceso_api.viewsets.tarea import TareaList
 
@@ -40,6 +44,8 @@ router.register(r'requisito-resultados', RequisitoResultadoViewSet, base_name='r
 #Forms
 router.register(r'formularios', FormularioViewSet, base_name='formulario')
 router.register(r'campos', CampoViewSet, base_name='campo')
+router.register(r'campo-validations', CampoValidationViewSet, base_name='campo-validation')
+router.register(r'validations', ValidationViewSet, base_name='validation')
 
 
 # tesis_procesos_list = TesisProcesoViewSet.as_view({
