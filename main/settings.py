@@ -39,9 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Docs django
     'django.contrib.admindocs',
+
     # utils
     'rest_framework',
     'corsheaders',
+
+    # auth
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 
     # apps
     'apps.academico',
@@ -58,6 +66,14 @@ INSTALLED_APPS = [
     'apis.tesis_proceso_api',
 
 ]
+
+import datetime
+
+# Configure los JWT para que caduquen después de 1 hora y permita a los usuarios actualizar los tokens de vencimiento cercano
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    'JWT_ALLOW_REFRESH': True,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,7 +153,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Haga que JWT Auth sea el mecanismo de autenticación predeterminado para Django
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
 
+# Permite que django-rest-auth use tokens JWT en lugar de tokens regulares.
+REST_USE_JWT = True
+
+SITE_ID = 1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -158,3 +184,6 @@ MEDIA_URL = '/media/'
 # )
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Temporal hasta que tengamos un servidor de comprovacion de mails SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
