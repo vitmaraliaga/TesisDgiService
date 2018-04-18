@@ -19,5 +19,11 @@ class RolProcesoViewSet(ModelPagination, viewsets.ModelViewSet):
     """
     A simple ViewSet for listing or retrieving Rol proceso.
     """
-    queryset = RolProceso.objects.all()
     serializer_class = RolProcesoSerializer
+
+    def get_queryset(self):
+        queryset = RolProceso.objects.all()
+        proceso_id = self.request.query_params.get('proceso_id', None)
+        if proceso_id is not None:
+            queryset = queryset.filter(proceso__id = proceso_id)
+        return queryset
