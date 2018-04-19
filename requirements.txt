@@ -1,8 +1,22 @@
+certifi==2018.4.16
+chardet==3.0.4
+defusedxml==0.5.0
 Django==1.11.6
-django-backend-utils==0.1
+django-allauth==0.35.0
+# django-backend-utils==0.1 #pip install --upgrade https://github.com/practian-reapps/django-backend-utils/raw/master/dist/django-backend-utils-0.1.zip
 django-cors-headers==2.1.0
+django-rest-auth==0.9.3
 djangorestframework==3.7.0
+djangorestframework-jwt==1.11.0
 docutils==0.14
+idna==2.6
+oauthlib==2.0.7
 olefile==0.44
 Pillow==4.3.0
+PyJWT==1.6.1
+python3-openid==3.1.0
 pytz==2017.2
+requests==2.18.4
+requests-oauthlib==0.8.0
+six==1.11.0
+urllib3==1.22
