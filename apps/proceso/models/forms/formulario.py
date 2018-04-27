@@ -23,8 +23,8 @@ class Formulario(Base):
     orden = models.IntegerField(capfirst(_('orden')), null=True,
                                 blank=True)  # En realidad es not null. por problemas de migration se le pone asi.
     width = models.IntegerField(
-        capfirst(_('width')), 
-        default=100, 
+        capfirst(_('width')),
+        default=100,
         validators=[
             MaxValueValidator(100),
             MinValueValidator(1),
