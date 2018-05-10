@@ -12,5 +12,5 @@ from rest_framework import serializers
 class RequisitoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requisito
-        fields = ('id', 'nombre', 'descripcion', 'activo', 'plazo_dias', 'tipo', 'fecha_creacion', 'fecha_actualizacion')
+        fields = ('id', 'nombre', 'descripcion', 'activo', 'plazo_dias', 'tipo', 'tarea', 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
