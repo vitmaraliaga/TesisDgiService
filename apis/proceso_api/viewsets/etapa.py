@@ -26,7 +26,7 @@ class EtapaViewSet(viewsets.ModelViewSet):
 
     def filter_queryset(self, queryset):
         tesis_proceso_id = self.request.query_params.get('tesis_proceso_id', None)
-        proceso_id = None
+        proceso_id = self.request.query_params.get('proceso_id', None)
 
         if tesis_proceso_id is not None:
             proceso_id = TesisProceso.objects.get(pk=tesis_proceso_id).proceso_id
