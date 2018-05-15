@@ -9,9 +9,7 @@ Description: modelo Requisito
 from django.db import models
 from .base import Base
 from ..enums import TIPO_REQUISITO_CHOICES, NORMAL
-from .tarea import Tarea
 from django.utils.text import capfirst
-# from .tarea import Tarea
 from django.utils.translation import ugettext_lazy as _
 
 
