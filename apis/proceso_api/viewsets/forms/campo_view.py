@@ -19,12 +19,12 @@ class CampoSerializer(serializers.ModelSerializer):
     # validation = ValidationSerializer(many=True, read_only=True)
     class Meta:
         model = Campo
-        fields = ('id', 
-                'label', 'name', 'type', 'required', 
-                'width', 'placeholder', 
-                'model', 'json', 'formulario', 'icon', 
-                'prefix', 'hint_start', 'hint_end_count_text', 'disabled', 
-                'multiselect', 'order', 
+        fields = ('id',
+                'label', 'name', 'type', 'required',
+                'width', 'placeholder',
+                'model', 'json', 'formulario', 'icon',
+                'prefix', 'hint_start', 'hint_end_count_text', 'disabled',
+                'multiselect', 'order', 'accept_fileinput', 'multiple_fileinput',
                 
                 'campovalidation_set',
                 # 'validation',

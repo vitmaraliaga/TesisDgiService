@@ -53,6 +53,13 @@ class Campo(Base):
     order = models.IntegerField(capfirst(_('order')), null=True,
                                 blank=True)  # En realidad es not null. por problemas de migration se le pone asi.
 
+    accept_fileinput = models.CharField(capfirst(_('Aceept for Fileinput')), 
+                            null= True, blank = True, max_length = 500,
+                            help_text="Extención de los archivos que se puede adjuntar") # Solo para FileInputs
+    multiple_fileinput = models.BooleanField(capfirst(_('multiple')),
+                            default = False,
+                            help_text="Si el File input es para multiples Erchivos") # Solo para Fileinputs
+
     class Meta:
         verbose_name = 'campo'
         verbose_name_plural = "campos"
