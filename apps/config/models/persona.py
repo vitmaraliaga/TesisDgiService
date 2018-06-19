@@ -17,7 +17,7 @@ class Persona(Base):
     nombres = models.CharField(capfirst(_('nombres')), max_length=50)
     apellido_paterno = models.CharField(capfirst(_('apellido paterno')), max_length=50)
     apellido_materno = models.CharField(capfirst(_('apellido materno')), max_length=50)
-    genero = models.CharField(capfirst(_('apellido materno')), max_length=1, choices=GENERO_CHOICES, default=MASCULINO)
+    genero = models.CharField(capfirst(_('género')), max_length=1, choices=GENERO_CHOICES, default=MASCULINO)
     fecha_nacimiento = models.DateField(capfirst(_('fecha de nacimiento')))
     direccion = models.CharField(capfirst(_('dirección')), null=True, blank=True, max_length=500)
     telefono = models.CharField(capfirst(_('teléfono')), null=True, blank=True, max_length=12)
