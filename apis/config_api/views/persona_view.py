@@ -9,6 +9,7 @@ import logging
 
 from apps.config.models.persona import Persona
 from rest_framework import viewsets, serializers
+from rest_framework.validators import UniqueValidator
 
 log = logging.getLogger(__name__)
 
@@ -30,6 +31,20 @@ class PersonaSerializer(serializers.ModelSerializer):
                   'foto',
 
                   'fecha_creacion', 'fecha_actualizacion')
+
+        # extra_kwargs = {
+        #     'num_doc': {
+        #         'validators': [UniqueValidator(queryset=Persona.objects.all())],
+        #     }
+        # }
+
+        # validators = [
+        #     UniqueValidator(
+        #         queryset=Persona.objects.all(),
+        #         fields=('num_doc')
+        #     )
+        # ]
+
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
 

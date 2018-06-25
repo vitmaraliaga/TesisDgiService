@@ -30,11 +30,6 @@ class AsesorSerializer(serializers.ModelSerializer):
 
             'fecha_creacion', 
             'fecha_actualizacion')
-        extra_kwargs = {
-            'persona.num_doc': {
-                'validators': [],
-            }
-        }
 
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
