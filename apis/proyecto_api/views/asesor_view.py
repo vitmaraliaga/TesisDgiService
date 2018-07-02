@@ -30,46 +30,40 @@ class AsesorSerializer(serializers.ModelSerializer):
 
             'fecha_creacion', 
             'fecha_actualizacion')
-        # extra_kwargs = {
-        # 'id': {
-        #     'read_only': False, 
-        #     'required': True
-        #     }
-        # } #very important
+
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
-    # def create(self, validated_data):
-        # persona_data = validated_data.pop('persona')
-        # asesor = Asesor.objects.create(**validated_data)
-        # Persona.objects.create(asesor=asesor, **persona_data)
-        # return asesor
-        # persona_data = validated_data.pop('persona')
+    def create(self, validated_data):
+        persona_data = validated_data.pop('persona')
         # persona = Persona.objects.create(**persona_data)
-        # asesor = Asesor.objects.create(persona=persona, **validated_data)
-        # return asesor
-    # def 
-    # def update(self, instance, validated_data):
-    #     instance.persona = validated_data['persona']
-    #     instance.save()
+        persona, created = Persona.objects.update_or_create(
+            pk=persona_data.get('id'),
+            defaults=persona_data)
+        asesor = Asesor.objects.create(persona=persona, **validated_data)
+        return asesor
 
-    #     # Delete any detail not included in the request
-    #     asesor_ids = [item['asesor_id'] for item in validated_data['asesors']]
-    #     for asesor in persona.asesors.all():
-    #         if asesor.id not in asesor_ids:
-    #             asesor.delete()
+# https://www.reddit.com/r/django/comments/6h6l2f/need_help_with_drf_serializer_validation/
+    def update(self, instance, validated_data):
+        persona_data = validated_data.get('persona')
+        ipersona = Persona.objects.get(id=instance.persona.id)
+        ipersona.nombres = persona_data.get('nombres', ipersona.nombres)
+        ipersona.apellido_paterno = persona_data.get('apellido_paterno', ipersona.apellido_paterno)
+        ipersona.apellido_materno = persona_data.get('apellido_materno', ipersona.apellido_materno)
+        ipersona.genero = persona_data.get('genero', ipersona.genero)
+        ipersona.fecha_nacimiento = persona_data.get('fecha_nacimiento', ipersona.fecha_nacimiento)
+        ipersona.num_doc = persona_data.get('num_doc', ipersona.num_doc)
+        ipersona.persona.save()
+        # instance.persona.nombres = persona_data.get('nombres', instance.persona.nombres)
+        # instance.persona.apellido_paterno = persona_data.get('apellido_paterno', instance.persona.apellido_paterno)
+        # instance.persona.apellido_materno = persona_data.get('apellido_materno', instance.persona.apellido_materno)
+        # instance.persona.genero = persona_data.get('genero', instance.persona.genero)
+        # instance.persona.fecha_nacimiento = persona_data.get('fecha_nacimiento', instance.persona.fecha_nacimiento)
+        # instance.persona.num_doc = persona_data.get('num_doc', instance.persona.num_doc)
+        # instance.persona.save()
 
-    #     # Create or update owner 
-    #     for asesor in validated_data['asesors']:
-    #         asesorObj = Asesor.objects.get(pk=item['id'])
-    #         if asesorObje:
-    #             asesorObj.persona=item['persona']
-    #             ....fields...
-    #         else:
-    #            asesorObj = Asesor.create(car=instance,**owner)
-    #         ownerObj.save()
-
-    #     return instance
-
+        instance.activo = validated_data.get('activo', instance.activo)
+        instance.save()
+        return instance
 
 class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     """
