@@ -45,6 +45,7 @@ class AsesorSerializer(serializers.ModelSerializer):
 # https://www.reddit.com/r/django/comments/6h6l2f/need_help_with_drf_serializer_validation/
     def update(self, instance, validated_data):
         persona_data = validated_data.get('persona')
+        # persona_data = validated_data.pop('persona')
         ipersona = Persona.objects.get(id=instance.persona.id)
         ipersona.nombres = persona_data.get('nombres', ipersona.nombres)
         ipersona.apellido_paterno = persona_data.get('apellido_paterno', ipersona.apellido_paterno)
@@ -52,7 +53,7 @@ class AsesorSerializer(serializers.ModelSerializer):
         ipersona.genero = persona_data.get('genero', ipersona.genero)
         ipersona.fecha_nacimiento = persona_data.get('fecha_nacimiento', ipersona.fecha_nacimiento)
         ipersona.num_doc = persona_data.get('num_doc', ipersona.num_doc)
-        ipersona.persona.save()
+        ipersona.save()
         # instance.persona.nombres = persona_data.get('nombres', instance.persona.nombres)
         # instance.persona.apellido_paterno = persona_data.get('apellido_paterno', instance.persona.apellido_paterno)
         # instance.persona.apellido_materno = persona_data.get('apellido_materno', instance.persona.apellido_materno)
@@ -63,6 +64,7 @@ class AsesorSerializer(serializers.ModelSerializer):
 
         instance.activo = validated_data.get('activo', instance.activo)
         instance.save()
+        instance.persona = ipersona
         return instance
 
 class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):

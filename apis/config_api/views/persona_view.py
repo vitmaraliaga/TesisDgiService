@@ -32,21 +32,21 @@ class PersonaSerializer(serializers.ModelSerializer):
 
                   'fecha_creacion', 'fecha_actualizacion')
 
-        # extra_kwargs = {
-        #     'num_doc': {
-        #         'validators': [UniqueValidator(queryset=Persona.objects.all())],
-        #     }
-        # }
-
-        # validators = [
-        #     UniqueValidator(
-        #         queryset=Persona.objects.all(),
-        #         fields=('num_doc')
-        #     )
-        # ]
+        extra_kwargs = {
+                'num_doc': {'validators': []},
+            }
 
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
+    def validate_num_doc(self, value):
+        if self.context['request']._request.method == 'POST':
+            unique = UniqueValidator(
+                self.Meta.model.objects.all(),
+                message='Persona with this Dni already exists.',
+            )
+            unique.set_context(self.fields['num_doc'])
+            unique(value)
+        return value
 
 class PersonaViewSet(viewsets.ModelViewSet):
     """
