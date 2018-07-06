@@ -54,3 +54,22 @@ class PersonaViewSet(viewsets.ModelViewSet):
     """
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
+    default_fields = 'codename'
+    fields = 'nombres,'
+
+    def search(self, fields, term):
+        queryComplex = Q()
+        for field in fields.split(','):
+            dynamic_field = field + '__icontains'
+            queryComplex = queryComplex | Q(**{dynamic_field: term})
+        return queryComplex
+
+    def get_queryset(self):
+        search = self.request.query_params.get('query', None)
+        fields = self.request.query_params.get('fields', None)
+
+        if (search and fields) is not None:
+            queryset = queryset.filter(self.search(fields, search))
+
+        # text_search = self.request.text_search
+        # return Persona.objects.filter(purchaser=text_search)

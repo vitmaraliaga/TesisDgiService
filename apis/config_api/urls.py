@@ -15,9 +15,9 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'personas', PersonaViewSet, base_name='persona')
-router.register(r'menus', MenuViewSet, base_name='persona')
-router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
+router.register(r'menus', MenuViewSet, base_name='menu')
+router.register(r'users', UserViewSet, base_name='user')
+router.register(r'groups', GroupViewSet, base_name='group')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
