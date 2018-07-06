@@ -34,16 +34,18 @@ class AsesorSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
     def create(self, validated_data):
+        print('create ->>>>>>>>>>>>>>>>>>>>>>>>>>')
+        print(persona_data)
         persona_data = validated_data.pop('persona')
         # persona = Persona.objects.create(**persona_data)
-        persona, created = Persona.objects.update_or_create(
-            pk=persona_data.get('id'),
-            defaults=persona_data)
+        persona, created = Persona.objects.get(
+            pk=persona_data.get('id'))
         asesor = Asesor.objects.create(persona=persona, **validated_data)
         return asesor
 
-# https://www.reddit.com/r/django/comments/6h6l2f/need_help_with_drf_serializer_validation/
+    # https://www.reddit.com/r/django/comments/6h6l2f/need_help_with_drf_serializer_validation/
     def update(self, instance, validated_data):
+        print('update ->>>>>>>>>>>>>>>>>>>>>>>>>>')
         persona_data = validated_data.get('persona')
         # persona_data = validated_data.pop('persona')
         ipersona = Persona.objects.get(id=instance.persona.id)
@@ -73,3 +75,11 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     """
     queryset = Asesor.objects.all()
     serializer_class = AsesorSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        print('hoal')
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

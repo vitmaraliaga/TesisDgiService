@@ -10,6 +10,7 @@ import logging
 from apps.config.models.persona import Persona
 from rest_framework import viewsets, serializers
 from rest_framework.validators import UniqueValidator
+from django.db.models import Q
 
 log = logging.getLogger(__name__)
 
@@ -54,8 +55,8 @@ class PersonaViewSet(viewsets.ModelViewSet):
     """
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
-    default_fields = 'codename'
-    fields = 'nombres,'
+    # default_fields = 'codename'
+    # fields = 'nombres'
 
     def search(self, fields, term):
         queryComplex = Q()
@@ -65,11 +66,11 @@ class PersonaViewSet(viewsets.ModelViewSet):
         return queryComplex
 
     def get_queryset(self):
+        queryset = self.queryset
         search = self.request.query_params.get('query', None)
         fields = self.request.query_params.get('fields', None)
 
         if (search and fields) is not None:
             queryset = queryset.filter(self.search(fields, search))
 
-        # text_search = self.request.text_search
-        # return Persona.objects.filter(purchaser=text_search)
+        return queryset
