@@ -27,7 +27,7 @@ class Persona(Base):
     carnet_extrangeria = models.CharField(capfirst(_('carnet de extrangería')),
                                           help_text=capfirst(_('número de carnet de extrangería')), null=True,
                                           blank=True, max_length=12)
-    foto = models.ImageField(capfirst(_('foto')), upload_to='persona/fotos/', default='personas/fotos/none/default.png')
+    foto = models.ImageField(capfirst(_('foto')), upload_to='personas/fotos/', default='personas/fotos/none/default.png')
 
     class Meta:
         verbose_name = 'Persona'

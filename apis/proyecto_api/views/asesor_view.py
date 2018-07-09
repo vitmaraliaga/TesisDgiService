@@ -27,46 +27,31 @@ class AsesorSerializer(serializers.ModelSerializer):
             'id', 
             'persona',
             'activo',
-
             'fecha_creacion', 
             'fecha_actualizacion')
 
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
     def create(self, validated_data):
-        print('create ->>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print(persona_data)
         persona_data = validated_data.pop('persona')
-        # persona = Persona.objects.create(**persona_data)
-        persona, created = Persona.objects.get(
-            pk=persona_data.get('id'))
+        persona, created = Persona.objects.get_or_create(
+            pk=persona_data.get('id'),
+            defaults=persona_data)
         asesor = Asesor.objects.create(persona=persona, **validated_data)
         return asesor
 
     # https://www.reddit.com/r/django/comments/6h6l2f/need_help_with_drf_serializer_validation/
     def update(self, instance, validated_data):
-        print('update ->>>>>>>>>>>>>>>>>>>>>>>>>>')
-        persona_data = validated_data.get('persona')
-        # persona_data = validated_data.pop('persona')
-        ipersona = Persona.objects.get(id=instance.persona.id)
-        ipersona.nombres = persona_data.get('nombres', ipersona.nombres)
-        ipersona.apellido_paterno = persona_data.get('apellido_paterno', ipersona.apellido_paterno)
-        ipersona.apellido_materno = persona_data.get('apellido_materno', ipersona.apellido_materno)
-        ipersona.genero = persona_data.get('genero', ipersona.genero)
-        ipersona.fecha_nacimiento = persona_data.get('fecha_nacimiento', ipersona.fecha_nacimiento)
-        ipersona.num_doc = persona_data.get('num_doc', ipersona.num_doc)
-        ipersona.save()
-        # instance.persona.nombres = persona_data.get('nombres', instance.persona.nombres)
-        # instance.persona.apellido_paterno = persona_data.get('apellido_paterno', instance.persona.apellido_paterno)
-        # instance.persona.apellido_materno = persona_data.get('apellido_materno', instance.persona.apellido_materno)
-        # instance.persona.genero = persona_data.get('genero', instance.persona.genero)
-        # instance.persona.fecha_nacimiento = persona_data.get('fecha_nacimiento', instance.persona.fecha_nacimiento)
-        # instance.persona.num_doc = persona_data.get('num_doc', instance.persona.num_doc)
-        # instance.persona.save()
-
+        persona_data = validated_data.pop('persona')
+        instance.persona.nombres = persona_data.get('nombres', instance.persona.nombres)
+        instance.persona.apellido_paterno = persona_data.get('apellido_paterno', instance.persona.apellido_paterno)
+        instance.persona.apellido_materno = persona_data.get('apellido_materno', instance.persona.apellido_materno)
+        instance.persona.genero = persona_data.get('genero', instance.persona.genero)
+        instance.persona.fecha_nacimiento = persona_data.get('fecha_nacimiento', instance.persona.fecha_nacimiento)
+        instance.persona.num_doc = persona_data.get('num_doc', instance.persona.num_doc)
+        instance.persona.save()
         instance.activo = validated_data.get('activo', instance.activo)
         instance.save()
-        instance.persona = ipersona
         return instance
 
 class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
@@ -76,10 +61,12 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     queryset = Asesor.objects.all()
     serializer_class = AsesorSerializer
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        print('hoal')
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     print('hola en el viewsets')
+    #     print(serializer)
+    #     serializer.is_valid(raise_exception=True)
+    #     print('hola en el viewsets, despues de validar.')
+    #     self.perform_create(serializer)
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
