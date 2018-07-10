@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 class AsesorSerializer(serializers.ModelSerializer):
-    persona = PersonaSerializer(many=False, read_only=False)
+    # persona = PersonaSerializer(many=False, read_only=False)
     
     class Meta:
         model = Asesor
@@ -37,6 +37,7 @@ class AsesorSerializer(serializers.ModelSerializer):
         persona, created = Persona.objects.get_or_create(
             pk=persona_data.get('id'),
             defaults=persona_data)
+
         asesor = Asesor.objects.create(persona=persona, **validated_data)
         return asesor
 
@@ -61,11 +62,17 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     queryset = Asesor.objects.all()
     serializer_class = AsesorSerializer
 
+
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
     #     print('hola en el viewsets')
+    #     print(request.data)
     #     print(serializer)
+    #     print('---------------------------------------------------')
+    #     print(serializer.is_valid())
     #     serializer.is_valid(raise_exception=True)
+
+
     #     print('hola en el viewsets, despues de validar.')
     #     self.perform_create(serializer)
     #     headers = self.get_success_headers(serializer.data)
