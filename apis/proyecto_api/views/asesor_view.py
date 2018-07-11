@@ -13,20 +13,22 @@ from rest_framework import viewsets, serializers, filters
 from apis.config_api.views.persona_view import PersonaSerializer
 from rest_framework.response import Response
 from backend_utils.pagination import ModelPagination 
-
+from rest_framework import status
+from django.db import transaction, IntegrityError
 
 log = logging.getLogger(__name__)
 
 
 class AsesorSerializer(serializers.ModelSerializer):
     # persona = PersonaSerializer
-    # persona = PersonaSerializer(many=False, read_only=False)
+    data_persona = PersonaSerializer(source='persona', many=False, read_only=True)
     
     class Meta:
         model = Asesor
         fields = (
             'id', 
             'persona',
+            'data_persona',
             'activo',
             'fecha_creacion', 
             'fecha_actualizacion')
@@ -63,30 +65,49 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     queryset = Asesor.objects.all()
     serializer_class = AsesorSerializer
 
-
     def create(self, request, *args, **kwargs):
         data = request.data
         data_persona = data.pop('persona')
         try:
-            model_persona = Persona.objects.get(pk=data_persona.get('id'))
-            data['persona'] = '6561e167-9271-492a-a708-af507f6366df'
-            print('ya existe!')
-            # asesor_serializers = self.get_serializer(data=data)
-            # asesor_serializers.is_valid(raise_exception=True)
-            # self.perform_create(asesor_serializers)
-        except Persona.DoesNotExist:
-            print('es nuevo!')
-            persona_selializers = PersonaSerializer(data=data_persona)
-            persona_selializers.is_valid(raise_exception=True)
-            persona_selializers.save()
-            data['persona'] = persona_selializers.data.id
-        print('ya paso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        asesor_serializers = self.get_serializer(data=data)
-        print('ya paso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 2')
-        print(data)
-        asesor_serializers.is_valid(raise_exception=True)
-        print('ya paso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 3')
-        self.perform_create(asesor_serializers)
-        print('ya paso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 4')
+            with transaction.atomic():
+                try:
+                    # Cuando el asesor ya existe.
+                    persona_id = data_persona.get('id')
+                    model_persona = Persona.objects.get(pk=persona_id)
+                    data['persona'] = model_persona.id
+                except Exception:
+                    # Cuando el asesor es nuevo.
+                    persona_id = data_persona.pop('id')
+                    persona_serializer = PersonaSerializer(data=data_persona)
+                    persona_serializer.is_valid(raise_exception=True)
+                    persona_serializer.save()
+                    data['persona'] = persona_serializer.data.get('id')
+                asesor_serializers = self.get_serializer(data=data)
+                asesor_serializers.is_valid(raise_exception=True)
+                self.perform_create(asesor_serializers)
+        except IntegrityError:
+            pass
         headers = self.get_success_headers(asesor_serializers.data)
         return Response(asesor_serializers.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)        
+        data_asesor = request.data
+        data_persona = data_asesor.pop('persona')
+        try:
+            with transaction.atomic():
+                persona_id = data_persona.get('id')
+                model_persona = Persona.objects.get(pk=persona_id)
+                persona_serializer = PersonaSerializer(model_persona, data=data_persona, partial=partial)
+                persona_serializer.is_valid(raise_exception=True)
+                persona_serializer.save()
+                
+                instance_asesor = self.get_object()
+                asesor_serializer = self.get_serializer(instance_asesor, data=data_asesor, partial=partial)
+                asesor_serializer.is_valid(raise_exception=True)
+                self.perform_update(asesor_serializer)
+
+        except IntegrityError:
+            pass
+
+        return Response(asesor_serializer.data)
