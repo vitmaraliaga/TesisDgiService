@@ -11,8 +11,8 @@ from apps.proyecto.models.asesor import Asesor
 from apps.config.models.persona import Persona
 from rest_framework import viewsets, serializers, filters
 from apis.config_api.views.persona_view import PersonaSerializer
+from backend_utils.pagination import ModelPagination
 from rest_framework.response import Response
-from backend_utils.pagination import ModelPagination 
 from rest_framework import status
 from django.db import transaction, IntegrityError
 
