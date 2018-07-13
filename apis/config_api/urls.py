@@ -10,6 +10,7 @@ from .views.persona_view import PersonaViewSet
 from .views.menu_view import MenuViewSet
 from .views.user_view import UserViewSet
 from .views.group_view import GroupViewSet
+from .views.perfil_view import PerfilViewSet
 from django.conf.urls import url, include
 from rest_framework import routers
 
@@ -18,6 +19,7 @@ router.register(r'personas', PersonaViewSet, base_name='persona')
 router.register(r'menus', MenuViewSet, base_name='menu')
 router.register(r'users', UserViewSet, base_name='user')
 router.register(r'groups', GroupViewSet, base_name='group')
+router.register(r'perfiles', PerfilViewSet, base_name='perfil')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

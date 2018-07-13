@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import capfirst
 from ..enums import GENERO_CHOICES, MASCULINO
 
-
 class Persona(Base):
     nombres = models.CharField(capfirst(_('nombres')), max_length=50)
     apellido_paterno = models.CharField(capfirst(_('apellido paterno')), max_length=50)
