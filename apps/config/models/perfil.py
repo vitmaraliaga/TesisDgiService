@@ -20,13 +20,13 @@ class Perfil(Base):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     persona = models.OneToOneField(Persona)
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(usuario=instance)
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+    # @receiver(post_save, sender=User)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(usuario=instance)
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.profile.save()
 
     class Meta:
         verbose_name = 'Perfil'
