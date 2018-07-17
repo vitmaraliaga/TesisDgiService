@@ -63,17 +63,13 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
     serializer_class = AsesorSerializer
 
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     print('hola en el viewsets')
-    #     print(request.data)
-    #     print(serializer)
-    #     print('---------------------------------------------------')
-    #     print(serializer.is_valid())
-    #     serializer.is_valid(raise_exception=True)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        print(serializer.is_valid())
+        serializer.is_valid(raise_exception=True)
 
 
-    #     print('hola en el viewsets, despues de validar.')
-    #     self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        print('hola en el viewsets, despues de validar.')
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

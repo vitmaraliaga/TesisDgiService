@@ -71,7 +71,7 @@ class TesisProcesoList(generics.ListCreateAPIView):
 
     # Este create es del mixins
     def create(self, request, *args, **kwargs):
-
+        print('create ------------------>')
         # if not request.data._mutable:
             # request.data._mutable = True
 
@@ -82,6 +82,11 @@ class TesisProcesoList(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
+        user = request.user
+        print('user ------------------>')
+        print(user)
+        print(user.username)
+        print(user.email)
         # insert proyecto
         data_proyecto = {
             'id': None,
