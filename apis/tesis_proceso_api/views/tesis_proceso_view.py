@@ -84,9 +84,11 @@ class TesisProcesoList(generics.ListCreateAPIView):
 
         user = request.user
         print('user ------------------>')
-        print(user)
+        print(user.id)
         print(user.username)
         print(user.email)
+        perfil = Perfil.objects.get(usuario=user.id)
+        print(persona)
         # insert proyecto
         data_proyecto = {
             'id': None,
