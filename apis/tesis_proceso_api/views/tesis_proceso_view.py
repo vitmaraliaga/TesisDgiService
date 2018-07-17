@@ -15,7 +15,13 @@ from apis.proyecto_api.views.proyecto_view import ProyectoSerializer
 from rest_framework import viewsets, mixins, serializers, generics, views, status
 from rest_framework.response import Response
 
+from apps.config.models.perfil import Perfil
+from apps.config.models.persona import Persona
+from apps.proyecto.models.tesista import Tesista
+
 from backend_utils.pagination import ModelPagination
+from django.db import transaction, IntegrityError
+from django.shortcuts import get_object_or_404
 
 import datetime
 
@@ -74,42 +80,49 @@ class TesisProcesoList(generics.ListCreateAPIView):
         print('create ------------------>')
         # if not request.data._mutable:
             # request.data._mutable = True
+        try:
+            # insert Proceso
+            request.data['fecha_inicio'] = datetime.datetime.now()
+            request.data['estado'] = 'ACTIVO'
+            serializer = TesisProcesoSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
 
-        # insert Proceso
-        request.data['fecha_inicio'] = datetime.datetime.now()
-        request.data['estado'] = 'ACTIVO'
-        serializer = TesisProcesoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+            user = request.user
+            print('user ------------------>')
+            print(user.id)
+            print(user.username)
+            print(user.email)
+            perfil = Perfil.objects.get_object_or_404(usuario__id=user.id)
+            print('perfil')
+            print(perfil)
+            persona = Persona.objects.get(persona__id=perfil.persona.id)
+            print(persona)
+            tesista = Tesista.objects.get(persona__id=persona.id)
+            print(tesista)
+            # insert proyecto
+            data_proyecto = {
+                'id': None,
+                'titulo': request.data['proyecto_titulo'],
+                'resumen': None,
+                'archivo': None,
+                'fecha_fin': None,
+                'estado': 'PROCESO',
+                'fecha_sustentacion': None,
+                'dictaminador': [],
+                'asesor': [],
+                'jurado': [],
+                'tesista': ['852b5d9e-6bbe-4661-8d68-1e978b7a9dcd'], # Tesista key
+                'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
+                'tesis_proceso': serializer.data['id']
+                }
+            serializer1 = ProyectoSerializer(data = data_proyecto)
+            serializer1.is_valid(raise_exception=True)
+            serializer1.save()
 
-        user = request.user
-        print('user ------------------>')
-        print(user.id)
-        print(user.username)
-        print(user.email)
-        perfil = Perfil.objects.get(usuario=user.id)
-        print(persona)
-        # insert proyecto
-        data_proyecto = {
-            'id': None,
-            'titulo': request.data['proyecto_titulo'],
-            'resumen': None,
-            'archivo': None,
-            'fecha_fin': None,
-            'estado': 'PROCESO',
-            'fecha_sustentacion': None,
-            'dictaminador': [],
-            'asesor': [],
-            'jurado': [],
-            'tesista': ['852b5d9e-6bbe-4661-8d68-1e978b7a9dcd'], # Tesista key
-            'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
-            'tesis_proceso': serializer.data['id']
-            }
-        serializer1 = ProyectoSerializer(data = data_proyecto)
-        serializer1.is_valid(raise_exception=True)
-        serializer1.save()
-
-        headers = self.get_success_headers(serializer.data)
+            headers = self.get_success_headers(serializer.data)
+        except IntegrityError:
+            pass
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         # if serializer.is_valid():
             # serializer.save()
