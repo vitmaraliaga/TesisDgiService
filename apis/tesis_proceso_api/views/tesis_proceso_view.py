@@ -62,11 +62,30 @@ class TesisProcesoList(generics.ListCreateAPIView):
     List all tesis procesos, or create a new Tesis proceso
     """
     serializer_class = TesisProcesoSerializer
-    def get_queryset(self, proceso_id=None):
-        if proceso_id is not None:
-            return TesisProceso.objects.filter(proceso__id=proceso_id)
+
+    def get_tesista_id(self):
+        user = self.request.user
+        try:
+            perfil = Perfil.objects.get(usuario__id=user.id)
+            try:
+                tesista = Tesista.objects.get(persona__id=perfil.persona.id)
+                print('tesista_id --------------->')
+                print(tesista.id)
+                return tesista.id
+            except Tesista.DoesNotExist:
+                return None
+        except Perfil.DoesNotExist:
+            return None
+
+    def get_queryset(self, proceso_id=None, tesista_id=None):
+        tesista_id = self.get_tesista_id()
+        if tesista_id is not None:
+            if proceso_id is not None:
+                return TesisProceso.objects.filter(proceso__id=proceso_id, proyecto__tesista__id=tesista_id)
+            else:
+                return TesisProceso.objects.all()
         else:
-            return TesisProceso.objects.all()
+            return None
 
     # Este list es de list create del generics
     def list(self, *args, **kwargs):
@@ -77,7 +96,6 @@ class TesisProcesoList(generics.ListCreateAPIView):
 
     # Este create es del mixins
     def create(self, request, *args, **kwargs):
-        print('create ------------------>')
         # if not request.data._mutable:
             # request.data._mutable = True
         try:
@@ -87,19 +105,7 @@ class TesisProcesoList(generics.ListCreateAPIView):
             serializer = TesisProcesoSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
-
-            user = request.user
-            print('user ------------------>')
-            print(user.id)
-            print(user.username)
-            print(user.email)
-            perfil = Perfil.objects.get_object_or_404(usuario__id=user.id)
-            print('perfil')
-            print(perfil)
-            persona = Persona.objects.get(persona__id=perfil.persona.id)
-            print(persona)
-            tesista = Tesista.objects.get(persona__id=persona.id)
-            print(tesista)
+            tesista_id = self.get_tesista_id()
             # insert proyecto
             data_proyecto = {
                 'id': None,
@@ -112,8 +118,9 @@ class TesisProcesoList(generics.ListCreateAPIView):
                 'dictaminador': [],
                 'asesor': [],
                 'jurado': [],
-                'tesista': ['852b5d9e-6bbe-4661-8d68-1e978b7a9dcd'], # Tesista key
-                'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
+                'tesista': [tesista_id], # Tesista key
+                'linea_investigacion': [],  # Linea_investigacion key
+                # 'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
                 'tesis_proceso': serializer.data['id']
                 }
             serializer1 = ProyectoSerializer(data = data_proyecto)

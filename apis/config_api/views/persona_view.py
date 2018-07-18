@@ -9,7 +9,7 @@ import logging
 
 from apps.config.models.persona import Persona
 from rest_framework import viewsets, serializers
-from rest_framework.validators import UniqueValidator
+# from rest_framework.validators import UniqueValidator
 from django.db.models import Q
 
 log = logging.getLogger(__name__)
