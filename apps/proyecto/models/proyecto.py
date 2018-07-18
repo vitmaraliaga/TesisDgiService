@@ -33,7 +33,7 @@ class Proyecto(Base):
     asesor = models.ManyToManyField(Asesor, through='ProyectoAsesor', through_fields=('proyecto', 'asesor'))
     jurado = models.ManyToManyField(Jurado, through='ProyectoJurado', through_fields=('proyecto', 'jurado'))
     tesista = models.ManyToManyField(Tesista)
-    linea_investigacion = models.ManyToManyField(LineaInvestigacion)
+    linea_investigacion = models.ManyToManyField(LineaInvestigacion, blank=True)
     tesis_proceso = models.OneToOneField(TesisProceso, related_name='%(class)s', verbose_name=capfirst(_('tesis_proceso')),
                                    null=True, blank=True)
 
