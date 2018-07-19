@@ -20,7 +20,6 @@ log = logging.getLogger(__name__)
 
 
 class AsesorSerializer(serializers.ModelSerializer):
-    # persona = PersonaSerializer
     data_persona = PersonaSerializer(source='persona', many=False, read_only=True)
     
     class Meta:
@@ -71,12 +70,12 @@ class AsesorViewSet(ModelPagination, viewsets.ModelViewSet):
         try:
             with transaction.atomic():
                 try:
-                    # Cuando el asesor ya existe.
+                    # Cuando la persona ya existe.
                     persona_id = data_persona.get('id')
                     model_persona = Persona.objects.get(pk=persona_id)
                     data['persona'] = model_persona.id
                 except Exception:
-                    # Cuando el asesor es nuevo.
+                    # Cuando la persona es nuevo.
                     persona_id = data_persona.pop('id')
                     persona_serializer = PersonaSerializer(data=data_persona)
                     persona_serializer.is_valid(raise_exception=True)
