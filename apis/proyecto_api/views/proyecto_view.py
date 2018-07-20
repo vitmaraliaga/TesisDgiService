@@ -8,7 +8,7 @@ Description: View del recurso Proyecto.
 import logging
 
 from apps.proyecto.models.proyecto import Proyecto
-# from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoSerializer
+from apis.proyecto_api.views.tesista_view import TesistaSerializer
 from rest_framework import viewsets, serializers, filters
 
 from backend_utils.pagination import ModelPagination 
@@ -20,6 +20,7 @@ log = logging.getLogger(__name__)
 class ProyectoSerializer(serializers.ModelSerializer):
 
     # tesis_proceso = TesisProcesoSerializer(many=False, read_only=False)
+    data_tesista = TesistaSerializer(source='tesista', many=True, read_only=True)
 
     class Meta:
         model = Proyecto
@@ -35,6 +36,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
             'asesor',
             'jurado',
             'tesista',
+            'data_tesista',
             'linea_investigacion',
             'tesis_proceso',
 

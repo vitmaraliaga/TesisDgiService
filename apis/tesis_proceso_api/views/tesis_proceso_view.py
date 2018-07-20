@@ -29,25 +29,26 @@ log = logging.getLogger(__name__)
 
 
 class TesisProcesoSerializer(serializers.ModelSerializer):
-    proceso = ProcesoSerializer
+    # proceso = ProcesoSerializer
     # proceso = ProcesoSerializer(many=False, read_only=True)
     # proceso = serializers.SlugRelatedField(
         # many=False,
         # read_only=True,
         # slug_field='id'
     # )
-
-    proyecto = serializers.SlugRelatedField(
+    data_proyecto = ProyectoSerializer(source='proyecto', many=False, read_only=True)
+    # proyecto = serializers.SlugRelatedField(
         # many=False,
-        read_only=True,
-        slug_field='titulo'
-    )
+        # read_only=True,
+        # slug_field='titulo'
+    # )
     
     class Meta:
         model = TesisProceso
         fields = ('id', 'fecha_inicio', 'fecha_fin', 'estado',
                   'proceso',
                   'proyecto',
+                  'data_proyecto',
                   'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
