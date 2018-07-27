@@ -28,6 +28,7 @@ from .viewsets.forms.validation_view import ValidationViewSet
 
 from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoList
 from apis.proceso_api.viewsets.tarea import TareaList
+from apis.proceso_api.viewsets.model import ModelRestView
 
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -63,6 +64,8 @@ urlpatterns = [
     url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', TesisProcesoList.as_view()),
     url(r'etapas/(?P<etapa_id>.+)/tareas/$', TareaList.as_view()),
     url(r'tareas/(?P<tarea_id>.+)/formularios/$', FormularioList.as_view()),
-    url(r'formularios/(?P<formulario_id>.+)/campos/$', CampoList.as_view())
+    url(r'formularios/(?P<formulario_id>.+)/campos/$', CampoList.as_view()),
+
+    url(r'models/$', ModelRestView.as_view(), name='model_rest_view')
     # url(r'procesos/(?P<proceso_id>.+)/tesis-procesos/$', tesis_procesos_list, name='tesis-proceso-list')
 ]

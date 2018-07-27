@@ -33,8 +33,13 @@ class Campo(Base):
     # max = models.IntegerField(capfirst(_('max')), null=True, blank=True)
     # backgroud = models.CharField(capfirst(_('backgroud')), max_length=300, null=True, blank=True)
     placeholder = models.CharField(capfirst(_('placeholder')), max_length=300, null=True, blank=True)
-    model = models.CharField(capfirst(_('model')), max_length=200, null=True, blank=True,
+    model_name = models.CharField(capfirst(_('model_name')), max_length=200, null=True, blank=True,
                              help_text="Solo para selects")  # Solo para selects
+    model_pk = models.CharField(capfirst(_('model_pk')), max_length=200, null=True, blank=True,
+                             help_text="Solo para selects")  # Solo para selects
+    model_label = models.CharField(capfirst(_('model_label')), max_length=200, null=True, blank=True,
+                             help_text="Solo para selects")  # Solo para selects
+
     json = models.TextField(capfirst(_('json')), null=True, blank=True,
                             help_text="Solo para selects")  # Solo para selects
     formulario = models.ForeignKey(Formulario, related_name='%(class)ss', verbose_name=capfirst(_('formulario')),

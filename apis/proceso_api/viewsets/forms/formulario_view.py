@@ -16,12 +16,14 @@ log = logging.getLogger(__name__)
 
 class FormularioSerializer(serializers.ModelSerializer):
     # campo_listing = serializers.HyperlinkedIdentityField(view_name='proceso_api:campo-list')
-    campos = CampoSerializer(many=True, read_only=True)
+    # campos = CampoSerializer(many=True, read_only=True)
+    data_campos = CampoSerializer(source='campos', many=True, read_only=True)
 
     class Meta:
         model = Formulario
         fields = ('id', 'nombre', 'width', 
                 'campos',
+                'data_campos',
                 'alias', 'descripcion', 'tarea', 'orden', 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'campos', 'fecha_creacion', 'fecha_actualizacion')
 
