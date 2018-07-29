@@ -22,7 +22,10 @@ class CampoSerializer(serializers.ModelSerializer):
         fields = ('id',
                 'label', 'name', 'type', 'required',
                 'width', 'placeholder',
-                'model', 'json', 'formulario', 'icon',
+                'model_name',
+                'model_pk',
+                'model_label',
+                'json', 'formulario', 'icon',
                 'prefix', 'hint_start', 'hint_end_count_text', 'disabled',
                 'multiselect', 'order', 'accept_fileinput', 'multiple_fileinput',
                 
@@ -31,7 +34,6 @@ class CampoSerializer(serializers.ModelSerializer):
                 
                 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
-
 
 class CampoViewSet(viewsets.ModelViewSet):
     """
