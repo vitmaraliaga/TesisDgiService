@@ -6,6 +6,7 @@ from .models.requisito_resultado import RequisitoResultado
 from .models.resultado import Resultado
 from .models.rol_proceso import RolProceso
 from .models.tarea import Tarea
+from .models.documento import Documento
 
 from .models.forms.campo import Campo
 from .models.forms.formulario import Formulario
@@ -29,3 +30,5 @@ admin.site.register(Formulario)
 admin.site.register(Validation)
 admin.site.register(CampoValidation)
 # admin.site.register(CampoValor)
+
+admin.site.register(Documento)

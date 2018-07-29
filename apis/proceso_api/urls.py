@@ -28,6 +28,8 @@ from .viewsets.forms.validation_view import ValidationViewSet
 
 from apis.tesis_proceso_api.views.tesis_proceso_view import TesisProcesoList
 from apis.proceso_api.viewsets.tarea import TareaList
+from apis.proceso_api.viewsets.documento_view import DocumentoViewSet
+
 from apis.proceso_api.viewsets.model import ModelRestView
 
 from django.conf.urls import url, include
@@ -41,6 +43,8 @@ router.register(r'rol-procesos', RolProcesoViewSet, base_name='rol-proceso')
 router.register(r'resultados', ResultadoViewSet, base_name='resultado')
 router.register(r'tareas', TareaViewSet, base_name='tarea')
 router.register(r'requisito-resultados', RequisitoResultadoViewSet, base_name='requisito-resultado')
+
+router.register(r'documentos', DocumentoViewSet, base_name='documento')
 
 #Forms
 router.register(r'formularios', FormularioViewSet, base_name='formulario')
