@@ -50,12 +50,73 @@ class TesisProcesoSerializer(serializers.ModelSerializer):
                   'proyecto',
                   'data_proyecto',
                   'fecha_creacion', 'fecha_actualizacion')
-        read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
+        read_only_fields = ('id', 'proyecto','fecha_creacion', 'fecha_actualizacion',)
 
 
 class TesisProcesoViewSet(ModelPagination, viewsets.ModelViewSet):
     queryset = TesisProceso.objects.all()
     serializer_class = TesisProcesoSerializer
+
+    def get_tesista_id(self):
+        user = self.request.user
+        try:
+            perfil = Perfil.objects.get(usuario__id=user.id)
+            try:
+                tesista = Tesista.objects.get(persona__id=perfil.persona.id)
+                print('tesista_id --------------->')
+                print(tesista.id)
+                return tesista.id
+            except Tesista.DoesNotExist:
+                return None
+        except Perfil.DoesNotExist:
+            return None
+
+    # Este create es del mixins
+    def create(self, request, *args, **kwargs):
+        # if not request.data._mutable:
+            # request.data._mutable = True
+        print('create')
+        data = request.data
+        try:
+            # insert Proceso
+            data['fecha_inicio'] = datetime.datetime.now()
+            data['estado'] = 'ACTIVO'
+            print(data)
+            tesis_proceso_serializer = TesisProcesoSerializer(data=data)
+            print('antes el primer validador')
+            tesis_proceso_serializer.is_valid(raise_exception=True)
+            print('paso el primer validador')
+            self.perform_create(tesis_proceso_serializer)
+            tesista_id = self.get_tesista_id()
+            # insert proyecto
+            data_proyecto = {
+                'id': None,
+                'titulo': data['proyecto_titulo'],
+                'resumen': None,
+                'archivo': None,
+                'fecha_fin': None,
+                'estado': 'PROCESO',
+                'fecha_sustentacion': None,
+                'dictaminador': [],
+                'asesor': [],
+                'jurado': [],
+                'tesista': [tesista_id], # Tesista key
+                'linea_investigacion': [],  # Linea_investigacion key
+                # 'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
+                'tesis_proceso': tesis_proceso_serializer.data['id']
+                }
+            proyecto_serializer = ProyectoSerializer(data = data_proyecto)
+            proyecto_serializer.is_valid(raise_exception=True)
+            proyecto_serializer.save()
+            # tesis_proceso_serializer.data['data_proyecto'] = proyecto_serializer.data
+            headers = self.get_success_headers(tesis_proceso_serializer.data)
+        except IntegrityError:
+            pass
+        return Response(tesis_proceso_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        # if serializer.is_valid():
+            # serializer.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TesisProcesoList(generics.ListCreateAPIView):
@@ -99,18 +160,23 @@ class TesisProcesoList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         # if not request.data._mutable:
             # request.data._mutable = True
+        print('create')
+        data = request.data
         try:
             # insert Proceso
-            request.data['fecha_inicio'] = datetime.datetime.now()
-            request.data['estado'] = 'ACTIVO'
-            serializer = TesisProcesoSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
+            data['fecha_inicio'] = datetime.datetime.now()
+            data['estado'] = 'ACTIVO'
+            print(data)
+            tesis_proceso_serializer = TesisProcesoSerializer(data=data)
+            print('antes el primer validador')
+            tesis_proceso_serializer.is_valid(raise_exception=True)
+            print('paso el primer validador')
+            self.perform_create(tesis_proceso_serializer)
             tesista_id = self.get_tesista_id()
             # insert proyecto
             data_proyecto = {
                 'id': None,
-                'titulo': request.data['proyecto_titulo'],
+                'titulo': data['proyecto_titulo'],
                 'resumen': None,
                 'archivo': None,
                 'fecha_fin': None,
@@ -122,16 +188,16 @@ class TesisProcesoList(generics.ListCreateAPIView):
                 'tesista': [tesista_id], # Tesista key
                 'linea_investigacion': [],  # Linea_investigacion key
                 # 'linea_investigacion': ['d33d6948-3650-496b-abb7-6970e93fe614'],  # Linea_investigacion key
-                'tesis_proceso': serializer.data['id']
+                'tesis_proceso': tesis_proceso_serializer.data['id']
                 }
-            serializer1 = ProyectoSerializer(data = data_proyecto)
-            serializer1.is_valid(raise_exception=True)
-            serializer1.save()
-
-            headers = self.get_success_headers(serializer.data)
+            proyecto_serializer = ProyectoSerializer(data = data_proyecto)
+            proyecto_serializer.is_valid(raise_exception=True)
+            proyecto_serializer.save()
+            # tesis_proceso_serializer.data['data_proyecto'] = proyecto_serializer.data
+            headers = self.get_success_headers(tesis_proceso_serializer.data)
         except IntegrityError:
             pass
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(tesis_proceso_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         # if serializer.is_valid():
             # serializer.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
