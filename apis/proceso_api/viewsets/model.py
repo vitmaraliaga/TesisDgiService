@@ -5,9 +5,7 @@ from rest_framework.response import Response
 # from django.db.models import get_model
 from django.apps import apps
 from rest_framework import serializers
-# from rest_framework.core import serializers
 
-import json
 
 class Select(object):
     id = None
