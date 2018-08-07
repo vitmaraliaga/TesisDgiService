@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from ..base import Base
 from .formulario import Formulario
 from .validation import Validation
-from ...enums import TIPO_CAMPO_CHOICES, INPUT
+from ...enums import TIPO_CAMPO_CHOICES, INPUT, TIPO_VALIDADOR_CHOICES, GRUPAL
 
 
 class Campo(Base):
@@ -64,6 +64,11 @@ class Campo(Base):
     multiple_fileinput = models.BooleanField(capfirst(_('multiple')),
                             default = False,
                             help_text="Si el File input es para multiples Erchivos") # Solo para Fileinputs
+
+    # Solo cuqndo el campo es de tipo validador
+    tipo_validador = models.CharField(capfirst(_('tipo_validador')), choices=TIPO_VALIDADOR_CHOICES, max_length=15, null= True, blank = True)
+    # En este campo se guardará los Ids(en un cadena separada por comas) de los roles que pueden validar el campo
+    roles_validadores =  models.CharField(capfirst(_('roles_validadores')), max_length=500, null= True, blank = True)
 
     class Meta:
         verbose_name = 'campo'

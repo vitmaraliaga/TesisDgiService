@@ -38,6 +38,8 @@ MONTH = "month"
 TIME = "time"
 URL = "url"
 
+VALIDADOR = "validador"
+GENERAR_DOCUMENTOS = "generar_documentos"
 
 TIPO_CAMPO_CHOICES = (
     (INPUT, capfirst(_('input'))),
@@ -59,4 +61,17 @@ TIPO_CAMPO_CHOICES = (
     (MONTH, capfirst(_('month'))),
     (TIME, capfirst(_('time'))),
     (URL, capfirst(_('url'))),
+
+    (VALIDADOR, capfirst(_('validador'))),
+    (GENERAR_DOCUMENTOS, capfirst(_('generar-documentos'))),
+)
+
+GRUPAL = "G"
+ROL = "R"
+PERSONAL = "P"
+
+TIPO_VALIDADOR_CHOICES = (
+    (GRUPAL, capfirst(_('grupal'))),
+    (ROL, capfirst(_('rol'))),
+    (PERSONAL, capfirst(_('personal'))),
 )
