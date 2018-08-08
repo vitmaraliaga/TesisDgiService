@@ -31,6 +31,8 @@ class CampoSerializer(serializers.ModelSerializer):
                 
                 'campovalidation_set',
                 # 'validation',
+                'tipo_validador',
+                'roles_validadores',
                 
                 'fecha_creacion', 'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
