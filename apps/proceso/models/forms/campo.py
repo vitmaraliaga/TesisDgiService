@@ -10,6 +10,7 @@ from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 from ..base import Base
 from .formulario import Formulario
+from ..documento import Documento
 from .validation import Validation
 from ...enums import TIPO_CAMPO_CHOICES, INPUT, TIPO_VALIDADOR_CHOICES, GRUPAL
 
@@ -68,7 +69,12 @@ class Campo(Base):
     # Solo cuqndo el campo es de tipo validador
     tipo_validador = models.CharField(capfirst(_('tipo_validador')), choices=TIPO_VALIDADOR_CHOICES, max_length=15, null= True, blank = True)
     # En este campo se guardará los Ids(en un cadena separada por comas) de los roles que pueden validar el campo
-    roles_validadores =  models.CharField(capfirst(_('roles_validadores')), max_length=500, null= True, blank = True)
+    roles_validadores = models.CharField(capfirst(_('roles_validadores')), max_length=500, null= True, blank = True)
+
+    # Solo cuando el campo es de tipo generador de documentos
+    documento = models.ForeignKey(Documento, related_name='%(class)ss', verbose_name=capfirst(_('documento')), null= True, blank = True)
+    # En este campo se guardará los Ids(en un cadena separada por comas) de los campos que activaràn el campo.
+    campos_validados = models.CharField(capfirst(_('campos_validados')), max_length=500, null= True, blank = True)
 
     class Meta:
         verbose_name = 'campo'
