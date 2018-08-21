@@ -25,13 +25,13 @@ class EtapaViewSet(viewsets.ModelViewSet):
     serializer_class = EtapaSerializer
 
     def filter_queryset(self, queryset):
-        tesis_proceso_id = self.request.query_params.get('tesis_proceso_id', None)
-        proceso_id = self.request.query_params.get('proceso_id', None)
+        # tesis_proceso_id = self.request.query_params.get('tesis_proceso_id', None)
+        proceso = self.request.query_params.get('proceso', None)
 
-        if tesis_proceso_id is not None:
-            proceso_id = TesisProceso.objects.get(pk=tesis_proceso_id).proceso_id
+        # if tesis_proceso_id is not None:
+            # proceso_id = TesisProceso.objects.get(pk=tesis_proceso_id).proceso_id
         
-        if proceso_id is not None:
-            queryset = queryset.filter(proceso_id=proceso_id).order_by('orden')
+        if proceso is not None:
+            queryset = queryset.filter(proceso_id=proceso).order_by('orden')
         
         return queryset
