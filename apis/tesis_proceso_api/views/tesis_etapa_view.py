@@ -21,11 +21,15 @@ log = logging.getLogger(__name__)
 
 
 class TesisEtapaSerializer(serializers.ModelSerializer):
-    has_made = serializers.ReadOnlyField()
+    tesis_etapa_exist = serializers.ReadOnlyField()
+    # data_etapa = EtapaSerializer(source='data_etapa', many=False, read_only=True)
+    data_etapa = EtapaSerializer( many=False, read_only=True)
+
     class Meta:
         model = TesisEtapa
         fields = (
-            'id', 'fecha_inicio', 'has_made', 'fecha_fin', 'activo', 'tesis_proceso', 'etapa', 'fecha_creacion',
+            'id', 'fecha_inicio', 'tesis_etapa_exist', 'fecha_fin', 'activo',
+            'tesis_proceso', 'etapa', 'data_etapa', 'fecha_creacion',
             'fecha_actualizacion')
         read_only_fields = ('id', 'fecha_creacion', 'fecha_actualizacion',)
 
@@ -42,18 +46,23 @@ class TesisEtapaViewSet(viewsets.ModelViewSet):
     def list(self, *args):
         tesis_proceso = self.request.query_params.get('tesis_proceso', None)
         tesisEtapas_verificadas = []
-
         if tesis_proceso is not None:
             tesiProceso = TesisProceso.objects.get(pk=tesis_proceso)
             etapas = self.get_etapas(tesiProceso.proceso.id)
             for etapa in etapas:
                 # Comprovar si esta etapa esta registrada en tesis etapa
-                tesisEtapa = TesisEtapa.objects.filter(etapa_id = etapa.id, tesis_proceso_id=tesiProceso.id)
-                # Convertimos esta etapa en tesisEtapa
-                etapa.tesis_proceso= tesiProceso.id
-                etapa.etapa= etapa.id
-                etapa.has_made = tesisEtapa # Aquí me quedé
-                tesisEtapas_verificadas.append(etapa)
+                try:
+                    tesisEtapa = TesisEtapa.objects.get(etapa_id=etapa.id, tesis_proceso_id=tesiProceso.id)
+                except TesisEtapa.DoesNotExist:
+                    tesisEtapa = None
+                # Creamos una instancia de tesis etapa bacia
+                mytesisEtapa = TesisEtapa(etapa= etapa)
+                mytesisEtapa.id= None
+                mytesisEtapa.tesis_proceso= tesiProceso
+                mytesisEtapa.data_etapa= etapa
+                mytesisEtapa.tesis_etapa_exist = tesisEtapa
+
+                tesisEtapas_verificadas.append(mytesisEtapa)
                 
-        serializer = TesisEtapaSerializer(tesisEtapas_verificadas, many=True)
+        serializer = TesisEtapaSerializer(tesisEtapas_verificadas, many=True) # Lo que en realidad lista son etapas no tesis etapas.
         return Response(serializer.data)

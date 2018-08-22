@@ -7,6 +7,7 @@ Description: urls del api tesis_proceso.
 """
 from .views.tesis_proceso_view import TesisProcesoViewSet
 from .views.tesis_etapa_view import TesisEtapaViewSet
+from .views.tesis_tarea_view import TesisTareaViewSet
 
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -34,6 +35,7 @@ tesis_etapa_detail = TesisEtapaViewSet.as_view({
 
 router.register(r'tesis-etapas', TesisEtapaViewSet, base_name='tesis-etapa')
 router.register(r'tesis-procesos', TesisProcesoViewSet, base_name='tesis-proceso')
+router.register(r'tesis-tareas', TesisTareaViewSet, base_name='tesis-tarea')
 
 # urlpatterns = format_suffix_patterns([
 urlpatterns = [
