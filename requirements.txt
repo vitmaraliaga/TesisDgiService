@@ -1,7 +1,7 @@
 certifi==2018.4.16
 chardet==3.0.4
 defusedxml==0.5.0
-Django==1.11.6
+Django==1.11.23
 django-allauth==0.35.0
 # django-backend-utils==0.1 #pip install --upgrade https://github.com/practian-reapps/django-backend-utils/raw/master/dist/django-backend-utils-0.1.zip
 django-cors-headers==2.1.0
