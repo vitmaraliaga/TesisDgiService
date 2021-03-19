@@ -6,7 +6,7 @@ django-allauth==0.35.0
 # django-backend-utils==0.1 #pip install --upgrade https://github.com/practian-reapps/django-backend-utils/raw/master/dist/django-backend-utils-0.1.zip
 django-cors-headers==2.1.0
 django-rest-auth==0.9.3
-djangorestframework==3.7.0
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 docutils==0.14
 idna==2.6
